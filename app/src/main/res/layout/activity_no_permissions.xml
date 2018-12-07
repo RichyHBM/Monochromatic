@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent"
+                                             android:layout_height="match_parent">
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="0dp" android:gravity="center_horizontal">
+        <TextView
+                android:text="Permission missing!"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/textView" android:gravity="center_horizontal"
+                android:textSize="36sp" android:textStyle="bold" android:textColor="@android:color/black"/>
+        <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="256dp"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/ic_developer_mode_black"
+                android:id="@+id/developerModeIcon" android:layout_marginBottom="48dp" android:layout_marginTop="48dp"/>
+
+        <TextView
+                android:text="Please give write to secure settings permission running the following ADB command:"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/textView2" android:gravity="center_horizontal"
+                android:textSize="24sp" android:textColor="@android:color/black"/>
+
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/adb_command_text"
+                android:gravity="center_horizontal"
+                android:textSize="18sp" android:textColor="@android:color/holo_green_light"/>
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>
