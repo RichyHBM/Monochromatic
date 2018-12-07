@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Monochromatic</string>
+    <string name="write_secure_settings_permission">android.permission.WRITE_SECURE_SETTINGS</string>
+    <string name="adb_command">adb shell pm grant %1s android.permission.WRITE_SECURE_SETTINGS</string>
+    <string name="permission_missing">Permission missing!</string>
+    <string name="please_give_write_to_secure_settings_permission_running_the_following_adb_command">Please give write
+        to secure settings permission running the following ADB command:
+    </string>
+    <string name="force_close_the_app">And force close the app</string>
 </resources>

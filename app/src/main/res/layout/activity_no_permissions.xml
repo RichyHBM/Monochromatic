@@ -8,9 +8,9 @@
             android:layout_width="match_parent"
             android:layout_height="0dp" android:gravity="center_horizontal">
         <TextView
-                android:text="Permission missing!"
+                android:text="@string/permission_missing"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:id="@+id/textView" android:gravity="center_horizontal"
+                android:layout_height="wrap_content" android:id="@+id/permission_screen_label" android:gravity="center_horizontal"
                 android:textSize="36sp" android:textStyle="bold" android:textColor="@android:color/black"/>
         <ImageView
                 android:layout_width="match_parent"
@@ -20,9 +20,9 @@
                 android:id="@+id/developerModeIcon" android:layout_marginBottom="48dp" android:layout_marginTop="48dp"/>
 
         <TextView
-                android:text="Please give write to secure settings permission running the following ADB command:"
+                android:text="@string/please_give_write_to_secure_settings_permission_running_the_following_adb_command"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:id="@+id/textView2" android:gravity="center_horizontal"
+                android:layout_height="wrap_content" android:id="@+id/request_permission" android:gravity="center_horizontal"
                 android:textSize="24sp" android:textColor="@android:color/black"/>
 
         <TextView
@@ -30,6 +30,12 @@
                 android:layout_height="wrap_content" android:id="@+id/adb_command_text"
                 android:gravity="center_horizontal"
                 android:textSize="18sp" android:textColor="@android:color/holo_green_light"/>
+
+        <TextView
+                android:text="@string/force_close_the_app"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/restart_app" android:gravity="center_horizontal"
+                android:textSize="24sp" android:textColor="@android:color/black"/>
 
     </LinearLayout>
 
