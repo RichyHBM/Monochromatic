@@ -1,4 +1,4 @@
-package uk.co.richyhbm.monochromatic
+package uk.co.richyhbm.monochromatic.Utilities
 
 object Constants {
     const val displayDaltonizerEnabled = "accessibility_display_daltonizer_enabled"

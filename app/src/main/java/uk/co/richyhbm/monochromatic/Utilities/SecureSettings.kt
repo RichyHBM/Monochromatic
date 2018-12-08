@@ -2,7 +2,6 @@ package uk.co.richyhbm.monochromatic.Utilities
 
 import android.content.ContentResolver
 import android.provider.Settings
-import uk.co.richyhbm.monochromatic.Constants
 
 
 object SecureSettings {
