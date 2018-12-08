@@ -22,8 +22,8 @@ class NoPermissionsDialogFragment : DialogFragment() {
         val adbCommand = context!!.getString(R.string.adb_command, BuildConfig.APPLICATION_ID, permission)
 
         builder.setMessage(context!!.getString(R.string.grant_permission_adb, adbCommand))
-        builder.setNeutralButton(android.R.string.copy, copyAdbCommand())
-        builder.setPositiveButton(android.R.string.ok) { _, _ -> dismiss() }
+            .setNeutralButton(android.R.string.copy, copyAdbCommand())
+            .setPositiveButton(android.R.string.ok) { _, _ -> dismiss() }
         return builder.create()
     }
 

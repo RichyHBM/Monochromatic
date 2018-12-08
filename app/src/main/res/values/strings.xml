@@ -3,5 +3,5 @@
     <string name="write_secure_settings_permission">android.permission.WRITE_SECURE_SETTINGS</string>
     <string name="adb_command">adb shell pm grant %1s %2s</string>
     <string name="permission_missing">Permission missing!</string>
-    <string name="grant_permission_adb">Please give "write secure settings" permission running the following ADB command "%1s" and force close the app</string>
+    <string name="grant_permission_adb">Please give \"write secure settings\" permission running the following ADB command \"%1s\" and force close the app</string>
 </resources>
