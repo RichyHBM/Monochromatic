@@ -28,16 +28,8 @@
             </intent-filter>
         </activity>
 
-        <service
-                android:name=".Services.MonochromeService"
-                android:exported="false" />
+        <service android:name=".Services.MonochromeService" android:exported="false"/>
 
-        <receiver
-                android:name=".Receivers.MonochromeServiceRestartBroadcastReceiver"
-                android:enabled="true"
-                android:exported="false"
-                android:label="RestartServiceWhenStopped">
-        </receiver>
     </application>
 
 </manifest>

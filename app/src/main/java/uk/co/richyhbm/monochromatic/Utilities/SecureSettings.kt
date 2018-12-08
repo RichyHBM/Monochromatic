@@ -10,18 +10,18 @@ object SecureSettings {
         if (enabled) {
             Settings.Secure.putInt(contentResolver, Constants.displayDaltonizer, Constants.daltonizerSimulateMonochrome)
         } else {
-            Settings.Secure.putInt(contentResolver, Constants.displayDaltonizerEnabled, Constants.daltonizerDisabled)
+            Settings.Secure.putInt(contentResolver, Constants.displayDaltonizer, Constants.daltonizerDisabled)
         }
     }
 
     fun resetMonochrome(contentResolver: ContentResolver) {
         Settings.Secure.putInt(contentResolver, Constants.displayDaltonizerEnabled, false.int)
-        Settings.Secure.putInt(contentResolver, Constants.displayDaltonizerEnabled, Constants.daltonizerDisabled)
+        Settings.Secure.putInt(contentResolver, Constants.displayDaltonizer, Constants.daltonizerDisabled)
     }
 
     fun isMonochromeEnabled(contentResolver: ContentResolver) : Boolean {
         return Settings.Secure.getInt(contentResolver, Constants.displayDaltonizerEnabled, false.int) == true.int &&
-            Settings.Secure.getInt(contentResolver, Constants.displayDaltonizerEnabled, Constants.daltonizerDisabled) == Constants.daltonizerSimulateMonochrome
+            Settings.Secure.getInt(contentResolver, Constants.displayDaltonizer, Constants.daltonizerDisabled) == Constants.daltonizerSimulateMonochrome
     }
 
     val Boolean.int get() = if (this) 1 else 0

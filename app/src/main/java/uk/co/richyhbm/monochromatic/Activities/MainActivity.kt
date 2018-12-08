@@ -5,10 +5,12 @@ import android.os.Bundle
 import uk.co.richyhbm.monochromatic.Fragments.MainFragment
 import uk.co.richyhbm.monochromatic.Fragments.NoPermissionsDialogFragment
 import uk.co.richyhbm.monochromatic.R
+import uk.co.richyhbm.monochromatic.Services.MonochromeService
 import uk.co.richyhbm.monochromatic.Utilities.Permissions
 
 
-class MainActivity : BaseActivity(), SharedPreferences.OnSharedPreferenceChangeListener{
+class MainActivity : BaseActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -22,10 +24,15 @@ class MainActivity : BaseActivity(), SharedPreferences.OnSharedPreferenceChangeL
 
         if(!Permissions.hasSecureSettingsPermission(this)) {
             NoPermissionsDialogFragment().show(supportFragmentManager, "NoPermissionsDialog")
+            settings.setEnabled(false)
         }
     }
 
     override fun onSharedPreferenceChanged(p0: SharedPreferences?, p1: String?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        if(settings.isEnabled()) {
+            MonochromeService.startService(this)
+        } else {
+            MonochromeService.stopService(this)
+        }
     }
 }
