@@ -5,6 +5,5 @@ import uk.co.richyhbm.monochromatic.Utilities.Settings
 
 
 abstract class BaseActivity : AppCompatActivity() {
-    @Suppress("LeakingThis")
-    val settings = Settings(this)
+    val settings by lazy { Settings(this) }
 }

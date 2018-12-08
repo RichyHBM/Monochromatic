@@ -3,7 +3,5 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light">
         <item name="android:windowBackground">@android:color/white</item>
         <item name="android:colorBackground">@android:color/white</item>
-        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 </resources>
