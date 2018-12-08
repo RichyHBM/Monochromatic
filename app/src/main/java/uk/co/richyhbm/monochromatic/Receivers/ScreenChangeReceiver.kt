@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import uk.co.richyhbm.monochromatic.Utilities.SecureSettings
+import uk.co.richyhbm.monochromatic.Utilities.Settings
 
 class ScreenChangeReceiver : BroadcastReceiver() {
     fun registerReceiver(context: Context) {
@@ -26,13 +27,15 @@ class ScreenChangeReceiver : BroadcastReceiver() {
     }
 
     private fun screenOn(context: Context) {
-        if(SecureSettings.isMonochromeEnabled(context.contentResolver)) {
+        if(Settings(context).isEnabled() && !SecureSettings.isMonochromeEnabled(context.contentResolver)) {
             SecureSettings.toggleMonochrome(true, context.contentResolver)
         }
     }
 
     private fun screenOff(context: Context) {
-
+        if(Settings(context).isEnabled() && SecureSettings.isMonochromeEnabled(context.contentResolver)) {
+            SecureSettings.resetMonochrome(context.contentResolver)
+        }
     }
 }
 

@@ -8,11 +8,11 @@ import android.os.IBinder
 import android.support.v4.app.NotificationCompat
 import uk.co.richyhbm.monochromatic.Activities.MainActivity
 import uk.co.richyhbm.monochromatic.R
+import uk.co.richyhbm.monochromatic.Receivers.NotificationActionsReceiver
 import uk.co.richyhbm.monochromatic.Receivers.ScreenChangeReceiver
 import uk.co.richyhbm.monochromatic.Utilities.SecureSettings
 import uk.co.richyhbm.monochromatic.Utilities.Settings
-
-
+import kotlin.random.Random
 
 
 class MonochromeService : Service() {
@@ -78,14 +78,19 @@ class MonochromeService : Service() {
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
         super.onStartCommand(intent, flags, startId)
 
-        val notificationIntent = Intent(applicationContext, MainActivity::class.java)
-        notificationIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
-        val pendingIntent = PendingIntent.getActivity(applicationContext, 0, notificationIntent, 0)
+        val mainIntent = Intent(applicationContext, MainActivity::class.java)
+        mainIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+        val pendingMainIntent = PendingIntent.getActivity(applicationContext, Random.nextInt(), mainIntent, 0)
+
+        val disableIntent = Intent(applicationContext, NotificationActionsReceiver::class.java)
+        val pendingDisableIntent = PendingIntent.getBroadcast(applicationContext, Random.nextInt(), disableIntent, 0)
+
         val notification = NotificationCompat.Builder(this, channelId)
             .setSmallIcon(R.drawable.ic_filter_b_and_w_black)
-            .setContentIntent(pendingIntent)
+            .setContentIntent(pendingMainIntent)
             .setOngoing(true)
             .setPriority(NotificationCompat.PRIORITY_LOW)
+            .addAction(R.drawable.ic_twotone_invert_colors_off, getString(android.R.string.cancel), pendingDisableIntent)
             .build()
 
         startForeground(foregroundId, notification)

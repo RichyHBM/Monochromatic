@@ -30,6 +30,7 @@
 
         <service android:name=".Services.MonochromeService" android:exported="false"/>
 
+        <receiver android:name=".Receivers.NotificationActionsReceiver"/>
     </application>
 
 </manifest>
