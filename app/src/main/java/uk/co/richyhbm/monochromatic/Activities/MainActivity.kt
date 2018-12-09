@@ -2,7 +2,7 @@ package uk.co.richyhbm.monochromatic.Activities
 
 import android.content.SharedPreferences
 import android.os.Bundle
-import uk.co.richyhbm.monochromatic.Fragments.MainFragment
+import uk.co.richyhbm.monochromatic.Fragments.PreferencesFragment
 import uk.co.richyhbm.monochromatic.Fragments.NoPermissionsDialogFragment
 import uk.co.richyhbm.monochromatic.R
 import uk.co.richyhbm.monochromatic.Services.MonochromeService
@@ -17,7 +17,7 @@ class MainActivity : BaseActivity(), SharedPreferences.OnSharedPreferenceChangeL
         setContentView(R.layout.main_activity)
 
         supportFragmentManager.beginTransaction()
-            .replace(R.id.container, MainFragment())
+            .replace(R.id.container, PreferencesFragment())
             .commit()
 
         settings.registerPreferenceChangeListener(this)

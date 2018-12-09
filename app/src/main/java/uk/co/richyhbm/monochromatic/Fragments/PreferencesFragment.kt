@@ -6,7 +6,7 @@ import uk.co.richyhbm.monochromatic.R
 import uk.co.richyhbm.monochromatic.Utilities.Permissions
 
 
-class MainFragment : PreferenceFragmentCompat() {
+class PreferencesFragment : PreferenceFragmentCompat() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
