@@ -80,4 +80,16 @@ class Settings(val context: Context) {
         return getBoolean(R.string.settings_key_disable_with_screen_off, false)
     }
 
+    fun shouldEnableAtTime(): Boolean {
+        return getBoolean(R.string.settings_key_enable_with_time, false)
+    }
+
+    fun setEnableTime(hour: Int, minute:Int) {
+        return setString(R.string.settings_key_enable_time, "$hour:$minute")
+    }
+
+    fun getEnableTime() : String {
+        return getString(R.string.settings_key_enable_time, "00:00")
+    }
+
 }
