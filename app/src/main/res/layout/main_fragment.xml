@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/coordinatorLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".Fragments.MainFragment">
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" android:gravity="center_horizontal" android:layout_margin="16dp">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/app_name"
+                android:fontFamily="sans-serif-light"
+                android:textSize="42sp"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/grant_permission_adb"
+                android:id="@+id/textView2"
+                android:textStyle="bold"
+                android:layout_marginTop="46dp"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/app_name"
+                android:layout_marginTop="20dp"
+                android:textColor="#9e9e9e"/>
+
+        <android.support.v7.widget.SwitchCompat
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textOff="Inactive "
+                android:textOn="Active "
+                android:id="@+id/enabled_switch"
+                android:textStyle="bold"
+                android:checked="false"
+                android:layout_marginTop="15dp"/>
+
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>
