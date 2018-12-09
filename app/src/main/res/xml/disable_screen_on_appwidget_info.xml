@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:updatePeriodMillis="86400000"
+                    android:previewImage="@drawable/ic_invert_colors_off_black"
+                    android:resizeMode="horizontal|vertical"
+                    android:initialLayout="@layout/button_widget"
+                    android:widgetCategory="home_screen"
+                    android:minWidth="24dp"
+                    android:minHeight="24dp">
+</appwidget-provider>
