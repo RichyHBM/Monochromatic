@@ -22,7 +22,9 @@ class MainFragment : Fragment() {
         val settings = Settings(requireContext())
 
         enabled_switch.isEnabled = Permissions.hasSecureSettingsPermission(requireContext())
-        enabled_switch.isChecked = settings.isEnabled()
+        enabled_switch.isChecked = settings.isEnabled() && MonochromeService.isRunning(requireContext())
+        service_status.text = if(enabled_switch.isChecked) getString(R.string.service_enabled) else getString(R.string.service_disabled)
+
         enabled_switch.setOnCheckedChangeListener {_, b ->
             settings.setEnabled(b)
             service_status.text = if(settings.isEnabled()) getString(R.string.service_enabled) else getString(R.string.service_disabled)

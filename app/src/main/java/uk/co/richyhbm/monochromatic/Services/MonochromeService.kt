@@ -18,7 +18,7 @@ class MonochromeService : Service() {
     companion object {
         fun startService(context: Context) {
             val settings = Settings(context)
-            if(settings.isEnabled()) {
+            if(settings.isEnabled() && !isRunning(context)) {
                 val startServiceIntent = Intent(context, MonochromeService::class.java)
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     context.startForegroundService(startServiceIntent)
@@ -58,6 +58,8 @@ class MonochromeService : Service() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channelName = getString(R.string.app_name) + " service"
             val serviceChannel = NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_MIN)
+            serviceChannel.lockscreenVisibility = Notification.VISIBILITY_SECRET
+            serviceChannel.setShowBadge(false)
             val notificationManager = getSystemService(NotificationManager::class.java)
             notificationManager.createNotificationChannel(serviceChannel)
         }
@@ -85,7 +87,9 @@ class MonochromeService : Service() {
             .setSmallIcon(R.drawable.ic_filter_b_and_w_black)
             .setContentIntent(pendingMainIntent)
             .setOngoing(true)
-            .setPriority(NotificationCompat.PRIORITY_LOW)
+            .setVisibility(Notification.VISIBILITY_SECRET)
+            .setBadgeIconType(Notification.BADGE_ICON_NONE)
+            .setPriority(NotificationCompat.PRIORITY_MIN)
             .build()
 
         startForeground(foregroundId, notification)
