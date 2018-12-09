@@ -49,6 +49,13 @@
             </intent-filter>
         </receiver>
 
+        <receiver android:name=".Receivers.AppUpdatedReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_REPLACED" />
+                <data android:scheme="package" />
+            </intent-filter>
+        </receiver>
+
     </application>
 
 </manifest>
