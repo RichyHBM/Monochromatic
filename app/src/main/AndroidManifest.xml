@@ -29,8 +29,16 @@
         </activity>
 
         <service android:name=".Services.MonochromeService" android:exported="false"/>
+        <service android:name=".QuickTiles.QuickDisableTile"
+            android:icon="@drawable/ic_invert_colors_off_black"
+            android:label="@android:string/cancel"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
 
-        <receiver android:name=".Receivers.NotificationActionsReceiver"/>
+        <receiver android:name=".Receivers.DisableMonochromeReceiver"/>
     </application>
 
 </manifest>

@@ -6,7 +6,7 @@ import android.content.Intent
 import uk.co.richyhbm.monochromatic.Utilities.SecureSettings
 import uk.co.richyhbm.monochromatic.Utilities.Settings
 
-class NotificationActionsReceiver: BroadcastReceiver() {
+class DisableMonochromeReceiver: BroadcastReceiver() {
     override fun onReceive(context: Context?, p1: Intent?) {
         if(context != null) {
             val settings = Settings(context)
