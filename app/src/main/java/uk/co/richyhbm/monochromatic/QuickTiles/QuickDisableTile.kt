@@ -6,6 +6,7 @@ import android.service.quicksettings.Tile
 import android.service.quicksettings.TileService
 import android.support.annotation.RequiresApi
 import uk.co.richyhbm.monochromatic.Receivers.DisableMonochromeReceiver
+import uk.co.richyhbm.monochromatic.Utilities.SecureSettings
 import uk.co.richyhbm.monochromatic.Utilities.Settings
 
 
@@ -16,12 +17,12 @@ class QuickDisableTile : TileService() {
     override fun onTileAdded() {
         super.onTileAdded()
 
-        qsTile.state = if(settings.isEnabled()) Tile.STATE_ACTIVE else Tile.STATE_INACTIVE
+        qsTile.state = getTileState()
         qsTile.updateTile()
     }
 
     override fun onStartListening() {
-        qsTile.state = if(settings.isEnabled()) Tile.STATE_ACTIVE else Tile.STATE_INACTIVE
+        qsTile.state = getTileState()
         qsTile.updateTile()
     }
 
@@ -32,8 +33,13 @@ class QuickDisableTile : TileService() {
             val disableIntent = Intent(applicationContext, DisableMonochromeReceiver::class.java)
             sendBroadcast(disableIntent)
 
-            qsTile.state = Tile.STATE_INACTIVE
+            qsTile.state = getTileState()
             qsTile.updateTile()
         }
     }
+
+    private fun getTileState() : Int = if(settings.isEnabled()) {
+        if(SecureSettings.isMonochromeEnabled(applicationContext.contentResolver)) Tile.STATE_ACTIVE else Tile.STATE_INACTIVE
+    } else Tile.STATE_UNAVAILABLE
+
 }

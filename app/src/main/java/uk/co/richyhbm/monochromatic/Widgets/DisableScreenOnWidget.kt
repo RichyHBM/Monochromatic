@@ -14,7 +14,7 @@ import kotlin.random.Random
 class DisableScreenOnWidget : AppWidgetProvider() {
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
         super.onUpdate(context, appWidgetManager, appWidgetIds)
-        
+
         for (appWidgetId in appWidgetIds) {
 
             val disableIntent = Intent(context, DisableMonochromeReceiver::class.java)

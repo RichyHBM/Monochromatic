@@ -26,10 +26,6 @@ class MainActivity : BaseActivity(), SharedPreferences.OnSharedPreferenceChangeL
             NoPermissionsDialogFragment().show(supportFragmentManager, "NoPermissionsDialog")
             settings.setEnabled(false)
         }
-
-        if(settings.isEnabled()) {
-            MonochromeService.startService(this)
-        }
     }
 
     override fun onSharedPreferenceChanged(p0: SharedPreferences?, p1: String?) {
