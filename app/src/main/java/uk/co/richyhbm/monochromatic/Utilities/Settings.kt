@@ -76,4 +76,8 @@ class Settings(val context: Context) {
         setBoolean(R.string.settings_key_monochromatic_enabled, b)
     }
 
+    fun shouldDisableOnScreenOff(): Boolean {
+        return getBoolean(R.string.settings_key_disable_with_screen_off, false)
+    }
+
 }

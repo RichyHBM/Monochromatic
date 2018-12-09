@@ -6,4 +6,9 @@
             android:title="Enabled"
             android:key="@string/settings_key_monochromatic_enabled" />
 
+    <SwitchPreference
+            android:defaultValue="false"
+            android:title="Disable with screen off"
+            android:key="@string/settings_key_disable_with_screen_off" />
+
 </PreferenceScreen>

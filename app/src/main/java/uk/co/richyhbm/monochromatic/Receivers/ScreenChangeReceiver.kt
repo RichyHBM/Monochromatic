@@ -27,14 +27,20 @@ class ScreenChangeReceiver : BroadcastReceiver() {
     }
 
     private fun screenOn(context: Context) {
-        if(Settings(context).isEnabled() && !SecureSettings.isMonochromeEnabled(context.contentResolver)) {
+        val settings = Settings(context)
+
+        if(settings.isEnabled() && !SecureSettings.isMonochromeEnabled(context.contentResolver)) {
             SecureSettings.toggleMonochrome(true, context.contentResolver)
         }
     }
 
     private fun screenOff(context: Context) {
-        if(Settings(context).isEnabled() && SecureSettings.isMonochromeEnabled(context.contentResolver)) {
-            SecureSettings.resetMonochrome(context.contentResolver)
+        val settings = Settings(context)
+
+        if(settings.isEnabled() && settings.shouldDisableOnScreenOff()) {
+            if(SecureSettings.isMonochromeEnabled(context.contentResolver)) {
+                SecureSettings.resetMonochrome(context.contentResolver)
+            }
         }
     }
 }
