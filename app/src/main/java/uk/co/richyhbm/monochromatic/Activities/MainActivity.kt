@@ -1,7 +1,9 @@
 package uk.co.richyhbm.monochromatic.Activities
 
+import android.app.AlertDialog
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.support.v4.app.FragmentManager
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
@@ -50,12 +52,19 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.main_menu_settings -> {
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.container, PreferencesFragment())
-                    .addToBackStack(null)
-                    .commit()
+                if(!supportFragmentManager.lastOnStackIsFragmentOf(PreferencesFragment::class.java.name)) {
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.container, PreferencesFragment())
+                        .addToBackStack(PreferencesFragment::class.java.name)
+                        .commit()
+                }
             }
-            R.id.main_menu_about -> {}
+            R.id.main_menu_about -> {
+                AlertDialog.Builder(this)
+                    .setMessage(getString(R.string.app_info_3))
+                    .create()
+                    .show()
+            }
         }
         return super.onOptionsItemSelected(item)
     }
@@ -67,4 +76,7 @@ class MainActivity : AppCompatActivity() {
             super.onBackPressed()
         }
     }
+
+    private fun FragmentManager.lastOnStackIsFragmentOf(fragmentClassName: String) : Boolean = this.backStackEntryCount > 0
+            && this.getBackStackEntryAt(this.backStackEntryCount - 1).name == fragmentClassName
 }

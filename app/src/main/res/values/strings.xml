@@ -5,4 +5,9 @@
 
     <string name="permission_missing">Permission missing!</string>
     <string name="grant_permission_adb">Please give \"write secure settings\" permission running the following ADB command \"%1s\" and force close the app</string>
+    <string name="app_info_1">Monochromatic is an app to facilitate phone usage at night, by enabling the built in monochrome feature in Android 5 or later</string>
+    <string name="app_info_2">As this changes a system setting uninstalling this app wont revert it, to do that either disable the app before uninstalling or change back to color mode in the developer settings</string>
+    <string name="app_info_3">Unlike other night screen apps, this doesn\'t create an overlay, enabling monochrome for all screens and views, and does not interfere with android secure actions such as installing apps</string>
+    <string name="service_enabled">Monochromatic enabled</string>
+    <string name="service_disabled">Monochromatic disabled</string>
 </resources>

@@ -25,6 +25,8 @@ class MainFragment : Fragment() {
         enabled_switch.isChecked = settings.isEnabled()
         enabled_switch.setOnCheckedChangeListener {_, b ->
             settings.setEnabled(b)
+            service_status.text = if(settings.isEnabled()) getString(R.string.service_enabled) else getString(R.string.service_disabled)
+
             if (settings.isEnabled()) MonochromeService.startService(requireContext())
             else MonochromeService.stopService(requireContext())
         }
