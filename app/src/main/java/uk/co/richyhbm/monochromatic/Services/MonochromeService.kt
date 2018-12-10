@@ -97,8 +97,9 @@ class MonochromeService : Service() {
 
         startForeground(foregroundId, notification.build())
 
+        val settings = Settings(this)
         if(!SecureSettings.isMonochromeEnabled(contentResolver)) {
-            SecureSettings.toggleMonochrome(true, contentResolver)
+            SecureSettings.toggleMonochrome(settings.isTimeAllowed(), contentResolver)
         }
 
         return Service.START_STICKY

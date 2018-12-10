@@ -13,6 +13,7 @@ import uk.co.richyhbm.monochromatic.Fragments.PreferencesFragment
 import uk.co.richyhbm.monochromatic.R
 import uk.co.richyhbm.monochromatic.Services.MonochromeService
 import uk.co.richyhbm.monochromatic.Utilities.Permissions
+import uk.co.richyhbm.monochromatic.Utilities.SecureSettings
 import uk.co.richyhbm.monochromatic.Utilities.Settings
 
 
@@ -38,6 +39,7 @@ class MainActivity : AppCompatActivity() {
         settings.registerPreferenceChangeListener(SharedPreferences.OnSharedPreferenceChangeListener { _, _ ->
             if (settings.isEnabled()) {
                 MonochromeService.startService(this)
+                SecureSettings.toggleMonochrome(settings.isTimeAllowed(), contentResolver)
             } else {
                 MonochromeService.stopService(this)
             }

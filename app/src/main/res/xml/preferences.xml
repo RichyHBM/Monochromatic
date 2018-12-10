@@ -16,4 +16,9 @@
             android:title="Enabled time"
             android:summary="00:00" />
 
+    <Preference
+            android:key="@string/settings_key_disable_time"
+            android:title="Disabled time"
+            android:summary="00:00" />
+
 </PreferenceScreen>

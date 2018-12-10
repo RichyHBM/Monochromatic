@@ -18,9 +18,8 @@ class PreferencesFragment : PreferenceFragmentCompat() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        val minutes = settings.getEnableTime() % 60
-        val hours = TimeUnit.MINUTES.toHours(settings.getEnableTime().toLong())
-        findPreference(getString(R.string.settings_key_enable_time)).summary = String.format("%02d:%02d", hours, minutes)
+        findPreference(getString(R.string.settings_key_enable_time)).summary = getTimeToString(settings.getEnableTime())
+        findPreference(getString(R.string.settings_key_disable_time)).summary = getTimeToString(settings.getDisableTime())
     }
 
     override fun onPreferenceTreeClick(preference: Preference): Boolean =
@@ -28,9 +27,13 @@ class PreferencesFragment : PreferenceFragmentCompat() {
             getString(R.string.settings_key_enable_time) -> {
                 showTimePickerDialog {
                     settings.setEnableTime(it)
-                    val minutes = settings.getEnableTime() % 60
-                    val hours = TimeUnit.MINUTES.toHours(settings.getEnableTime().toLong())
-                    findPreference(getString(R.string.settings_key_enable_time)).summary = String.format("%02d:%02d", hours, minutes)
+                    findPreference(getString(R.string.settings_key_enable_time)).summary = getTimeToString(it)
+                }
+            }
+            getString(R.string.settings_key_disable_time) -> {
+                showTimePickerDialog {
+                    settings.setDisableTime(it)
+                    findPreference(getString(R.string.settings_key_disable_time)).summary = getTimeToString(it)
                 }
             }
             else -> super.onPreferenceTreeClick(preference)
@@ -46,5 +49,11 @@ class PreferencesFragment : PreferenceFragmentCompat() {
             settings.getEnableTime() % 60,
             true).show()
         return true
+    }
+
+    private fun getTimeToString(time: Int) : String {
+        val minutes = time % 60
+        val hours = TimeUnit.MINUTES.toHours(time.toLong())
+        return String.format("%02d:%02d", hours, minutes)
     }
 }

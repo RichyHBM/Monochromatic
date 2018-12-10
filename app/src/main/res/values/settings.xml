@@ -4,4 +4,5 @@
     <string name="settings_key_disable_with_screen_off" translatable="false">pref_disable_with_screen_off</string>
     <string name="settings_key_enable_with_time" translatable="false">pref_enable_with_time</string>
     <string name="settings_key_enable_time" translatable="false">pref_enable_time</string>
+    <string name="settings_key_disable_time" translatable="false">pref_disable_time</string>
 </resources>

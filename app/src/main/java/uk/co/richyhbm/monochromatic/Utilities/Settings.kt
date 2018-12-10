@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import uk.co.richyhbm.monochromatic.R
-
+import java.util.*
 
 
 class Settings(val context: Context) {
@@ -26,7 +26,7 @@ class Settings(val context: Context) {
         return settings.getLong(context.getString(keyId), defaultValue)
     }
 
-    private fun getStringSet(keyId: Int, defaultValue: Set<String>): Set<String> {
+    private fun getStringSet(keyId: Int, defaultValue: Set<String>): HashSet<String> {
         return HashSet(settings.getStringSet(context.getString(keyId), defaultValue))
     }
 
@@ -88,4 +88,24 @@ class Settings(val context: Context) {
         return getIntValue(R.string.settings_key_enable_time, 0)
     }
 
+    fun setDisableTime(minutesAfterMidnight: Int) {
+        return setInt(R.string.settings_key_disable_time, minutesAfterMidnight)
+    }
+
+    fun getDisableTime() : Int {
+        return getIntValue(R.string.settings_key_disable_time, 0)
+    }
+
+    fun isNowInEnabledTime(): Boolean {
+        val calendar = Calendar.getInstance()
+        val hour = calendar.get(Calendar.HOUR_OF_DAY)
+        val minute = calendar.get(Calendar.MINUTE)
+        val nowTime = hour * 60 + minute
+        return if(getDisableTime() < getEnableTime())
+            getEnableTime() < nowTime || nowTime < getDisableTime()
+        else
+            getEnableTime() < nowTime && nowTime < getDisableTime()
+    }
+
+    fun isTimeAllowed(): Boolean = !shouldEnableAtTime() || (shouldEnableAtTime() && isNowInEnabledTime())
 }
