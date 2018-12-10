@@ -1,5 +1,6 @@
 package uk.co.richyhbm.monochromatic.Fragments
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -29,7 +30,14 @@ class MainFragment : Fragment() {
             settings.setEnabled(b)
             service_status.text = if(settings.isEnabled()) getString(R.string.service_enabled) else getString(R.string.service_disabled)
 
-            if (settings.isEnabled()) MonochromeService.startService(requireContext())
+            if (settings.isEnabled()) {
+                MonochromeService.startService(requireContext())
+                AlertDialog.Builder(requireContext())
+                    .setMessage(getString(R.string.notification_dismiss_notice))
+                    .setPositiveButton(android.R.string.ok, null)
+                    .create()
+                    .show()
+            }
             else MonochromeService.stopService(requireContext())
         }
     }

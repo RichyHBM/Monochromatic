@@ -62,6 +62,7 @@ class MainActivity : AppCompatActivity() {
             R.id.main_menu_about -> {
                 AlertDialog.Builder(this)
                     .setMessage(getString(R.string.app_info_3))
+                    .setPositiveButton(android.R.string.ok, null)
                     .create()
                     .show()
             }

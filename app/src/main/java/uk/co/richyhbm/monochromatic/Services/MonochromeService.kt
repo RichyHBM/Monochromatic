@@ -87,12 +87,15 @@ class MonochromeService : Service() {
             .setSmallIcon(R.drawable.ic_filter_b_and_w_black)
             .setContentIntent(pendingMainIntent)
             .setOngoing(true)
+            .setStyle(NotificationCompat.DecoratedCustomViewStyle())
             .setVisibility(Notification.VISIBILITY_SECRET)
-            .setBadgeIconType(Notification.BADGE_ICON_NONE)
             .setPriority(NotificationCompat.PRIORITY_MIN)
-            .build()
 
-        startForeground(foregroundId, notification)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            notification.setBadgeIconType(Notification.BADGE_ICON_NONE)
+        }
+
+        startForeground(foregroundId, notification.build())
 
         if(!SecureSettings.isMonochromeEnabled(contentResolver)) {
             SecureSettings.toggleMonochrome(true, contentResolver)
