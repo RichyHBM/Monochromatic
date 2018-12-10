@@ -18,10 +18,6 @@ class Settings(val context: Context) {
         return settings.getBoolean(context.getString(keyId), defaultValue)
     }
 
-    private fun getInt(keyId: Int, defaultId: Int): Int {
-        return settings.getInt(context.getString(keyId), context.resources.getInteger(defaultId))
-    }
-
     private fun getIntValue(keyId: Int, defaultValue: Int): Int {
         return settings.getInt(context.getString(keyId), defaultValue)
     }
@@ -84,12 +80,12 @@ class Settings(val context: Context) {
         return getBoolean(R.string.settings_key_enable_with_time, false)
     }
 
-    fun setEnableTime(hour: Int, minute:Int) {
-        return setString(R.string.settings_key_enable_time, "$hour:$minute")
+    fun setEnableTime(minutesAfterMidnight: Int) {
+        return setInt(R.string.settings_key_enable_time, minutesAfterMidnight)
     }
 
-    fun getEnableTime() : String {
-        return getString(R.string.settings_key_enable_time, "00:00")
+    fun getEnableTime() : Int {
+        return getIntValue(R.string.settings_key_enable_time, 0)
     }
 
 }
