@@ -11,4 +11,9 @@
             android:title="Enable at a specific time"
             android:key="@string/settings_key_enable_with_time" />
 
+    <Preference
+            android:key="@string/settings_key_enable_time"
+            android:title="Enabled time"
+            android:summary="00:00" />
+
 </PreferenceScreen>
