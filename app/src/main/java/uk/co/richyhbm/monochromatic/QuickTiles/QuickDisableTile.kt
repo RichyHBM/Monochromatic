@@ -22,6 +22,13 @@ class QuickDisableTile : TileService() {
     }
 
     override fun onStartListening() {
+        super.onStartListening()
+        qsTile.state = getTileState()
+        qsTile.updateTile()
+    }
+
+    override fun onStopListening() {
+        super.onStopListening()
         qsTile.state = getTileState()
         qsTile.updateTile()
     }
