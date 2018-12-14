@@ -1,11 +1,9 @@
 package uk.co.richyhbm.monochromatic.Activities
 
-import android.app.AlertDialog
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.support.v4.app.FragmentManager
 import android.support.v7.app.AppCompatActivity
-import android.view.Menu
 import android.view.MenuItem
 import uk.co.richyhbm.monochromatic.Fragments.MainFragment
 import uk.co.richyhbm.monochromatic.Fragments.NoPermissionsDialogFragment
@@ -46,13 +44,7 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.main_menu, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
             R.id.main_menu_settings -> {
                 if(!supportFragmentManager.lastOnStackIsFragmentOf(PreferencesFragment::class.java.name)) {
                     supportFragmentManager.beginTransaction()
@@ -60,17 +52,14 @@ class MainActivity : AppCompatActivity() {
                         .addToBackStack(PreferencesFragment::class.java.name)
                         .commit()
                 }
+                true
             }
-            R.id.main_menu_about -> {
-                AlertDialog.Builder(this)
-                    .setMessage(getString(R.string.app_info_3))
-                    .setPositiveButton(android.R.string.ok, null)
-                    .create()
-                    .show()
+            android.R.id.home -> {
+                onBackPressed()
+                true
             }
+            else -> super.onOptionsItemSelected(item)
         }
-        return super.onOptionsItemSelected(item)
-    }
 
     override fun onBackPressed() {
         if (supportFragmentManager.backStackEntryCount > 0) {

@@ -2,6 +2,7 @@ package uk.co.richyhbm.monochromatic.Fragments
 
 import android.app.TimePickerDialog
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.preference.Preference
 import android.support.v7.preference.PreferenceFragmentCompat
 import uk.co.richyhbm.monochromatic.R
@@ -11,6 +12,12 @@ import java.util.concurrent.TimeUnit
 
 class PreferencesFragment : PreferenceFragmentCompat() {
     val settings: Settings by lazy { Settings(requireContext()) }
+
+    override fun onResume() {
+        super.onResume()
+        setHasOptionsMenu(false)
+        (activity as AppCompatActivity?)?.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
 
     override fun onCreatePreferences(p0: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.preferences, rootKey)
