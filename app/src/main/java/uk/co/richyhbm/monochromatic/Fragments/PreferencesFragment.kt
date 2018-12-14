@@ -18,8 +18,23 @@ class PreferencesFragment : PreferenceFragmentCompat() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        findPreference(getString(R.string.settings_key_enable_time)).summary = getTimeToString(settings.getEnableTime())
-        findPreference(getString(R.string.settings_key_disable_time)).summary = getTimeToString(settings.getDisableTime())
+
+        val enableTime = findPreference(getString(R.string.settings_key_enable_time))
+        val disableTime = findPreference(getString(R.string.settings_key_disable_time))
+
+        findPreference(getString(R.string.settings_key_enable_with_time)).setOnPreferenceChangeListener { _, newValue ->
+            newValue as Boolean
+            enableTime.isVisible = newValue
+            disableTime.isVisible = newValue
+
+            true
+        }
+
+        enableTime.isVisible = settings.shouldEnableAtTime()
+        disableTime.isVisible = settings.shouldEnableAtTime()
+
+        enableTime.summary = getTimeToString(settings.getEnableTime())
+        disableTime.summary = getTimeToString(settings.getDisableTime())
     }
 
     override fun onPreferenceTreeClick(preference: Preference): Boolean =
