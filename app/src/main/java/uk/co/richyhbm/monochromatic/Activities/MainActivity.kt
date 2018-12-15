@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.v4.app.FragmentManager
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
+import uk.co.richyhbm.monochromatic.Fragments.AboutFragment
 import uk.co.richyhbm.monochromatic.Fragments.MainFragment
 import uk.co.richyhbm.monochromatic.Fragments.NoPermissionsDialogFragment
 import uk.co.richyhbm.monochromatic.Fragments.PreferencesFragment
@@ -45,21 +46,30 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
-            R.id.main_menu_settings -> {
-                if(!supportFragmentManager.lastOnStackIsFragmentOf(PreferencesFragment::class.java.name)) {
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.container, PreferencesFragment())
-                        .addToBackStack(PreferencesFragment::class.java.name)
-                        .commit()
-                }
-                true
+        R.id.main_menu_settings -> {
+            if (!supportFragmentManager.lastOnStackIsFragmentOf(PreferencesFragment::class.java.name)) {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.container, PreferencesFragment())
+                    .addToBackStack(PreferencesFragment::class.java.name)
+                    .commit()
             }
-            android.R.id.home -> {
-                onBackPressed()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
+            true
         }
+        R.id.main_menu_about -> {
+            if (!supportFragmentManager.lastOnStackIsFragmentOf(AboutFragment::class.java.name)) {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.container, AboutFragment())
+                    .addToBackStack(AboutFragment::class.java.name)
+                    .commit()
+            }
+            true
+        }
+        android.R.id.home -> {
+            onBackPressed()
+            true
+        }
+        else -> super.onOptionsItemSelected(item)
+    }
 
     override fun onBackPressed() {
         if (supportFragmentManager.backStackEntryCount > 0) {
