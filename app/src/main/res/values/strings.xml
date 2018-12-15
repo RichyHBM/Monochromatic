@@ -11,4 +11,5 @@
     <string name="notification_dismiss_notice">Starting from android 8 apps are required to show a notification to be able to run in the background, the notification can be hidden by holding down on it and toggling the switch that appears</string>
     <string name="service_enabled">Monochromatic enabled</string>
     <string name="service_disabled">Monochromatic disabled</string>
+    <string name="by_richyhbm">By RichyHBM</string>
 </resources>
