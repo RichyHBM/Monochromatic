@@ -5,4 +5,6 @@
     <string name="settings_key_enable_with_time" translatable="false">pref_enable_with_time</string>
     <string name="settings_key_enable_time" translatable="false">pref_enable_time</string>
     <string name="settings_key_disable_time" translatable="false">pref_disable_time</string>
+    <string name="settings_key_enable_with_low_battery" translatable="false">pref_enable_with_low_battery</string>
+    <string name="settings_key_enable_with_low_battery_amount" translatable="false">pref_enable_with_low_battery_amount</string>
 </resources>

@@ -19,7 +19,11 @@ class Settings(val context: Context) {
     }
 
     private fun getIntValue(keyId: Int, defaultValue: Int): Int {
-        return settings.getInt(context.getString(keyId), defaultValue)
+        return try {
+            settings.getInt(context.getString(keyId), defaultValue)
+        }catch (e: Exception) {
+            defaultValue
+        }
     }
 
     private fun getLong(keyId: Int, defaultValue: Long): Long {
@@ -108,4 +112,16 @@ class Settings(val context: Context) {
     }
 
     fun isTimeAllowed(): Boolean = !shouldEnableAtTime() || (shouldEnableAtTime() && isNowInEnabledTime())
+
+    fun shouldEnableAtLowBattery(): Boolean {
+        return getBoolean(R.string.settings_key_enable_with_low_battery, false)
+    }
+
+    fun getLowBatteryLevel(): Int {
+        return getIntValue(R.string.settings_key_enable_with_low_battery_amount, 15)
+    }
+
+    fun setLowBatteryLevel(amount: Int) {
+        setInt(R.string.settings_key_enable_with_low_battery_amount, amount)
+    }
 }
