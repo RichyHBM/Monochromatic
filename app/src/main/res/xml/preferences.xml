@@ -3,6 +3,11 @@
 
     <SwitchPreference
             android:defaultValue="false"
+            android:title="Always on"
+            android:key="@string/settings_key_always_on" />
+
+    <SwitchPreference
+            android:defaultValue="false"
             android:title="Disable with screen off"
             android:key="@string/settings_key_disable_with_screen_off" />
 
