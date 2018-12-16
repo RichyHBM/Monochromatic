@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name" translatable="false">Monochromatic</string>
     <string name="write_secure_settings_permission" translatable="false">android.permission.WRITE_SECURE_SETTINGS</string>
     <string name="adb_command" translatable="false">adb shell pm grant %1s %2s</string>
 
