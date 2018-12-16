@@ -103,7 +103,7 @@ class MonochromeService : Service() {
 
         val settings = Settings(this)
         if(!SecureSettings.isMonochromeEnabled(contentResolver)) {
-            SecureSettings.toggleMonochrome(settings.isTimeAllowed(), contentResolver)
+            SecureSettings.toggleMonochrome(settings.isAllowed(), contentResolver)
         }
 
         return Service.START_STICKY

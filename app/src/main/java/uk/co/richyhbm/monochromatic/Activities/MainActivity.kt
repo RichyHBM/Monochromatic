@@ -30,6 +30,13 @@ class MainActivity : AppCompatActivity() {
         if(!Permissions.hasSecureSettingsPermission(this)) {
             NoPermissionsDialogFragment().show(supportFragmentManager, "NoPermissionsDialog")
             settings.setEnabled(false)
+        } else {
+            if (settings.isEnabled()) {
+                MonochromeService.startService(this)
+                SecureSettings.toggleMonochrome(settings.isAllowed(), contentResolver)
+            } else {
+                MonochromeService.stopService(this)
+            }
         }
 
         supportFragmentManager.beginTransaction()
@@ -39,7 +46,7 @@ class MainActivity : AppCompatActivity() {
         settings.registerPreferenceChangeListener(SharedPreferences.OnSharedPreferenceChangeListener { _, _ ->
             if (settings.isEnabled()) {
                 MonochromeService.startService(this)
-                SecureSettings.toggleMonochrome(settings.isTimeAllowed(), contentResolver)
+                SecureSettings.toggleMonochrome(settings.isAllowed(), contentResolver)
             } else {
                 MonochromeService.stopService(this)
             }

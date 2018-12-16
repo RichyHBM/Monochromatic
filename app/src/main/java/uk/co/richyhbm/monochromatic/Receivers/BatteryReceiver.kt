@@ -31,7 +31,7 @@ class BatteryReceiver : BroadcastReceiver() {
             if(level <= settings.getLowBatteryLevel()) {
                 SecureSettings.toggleMonochrome(true, context.contentResolver)
             } else {
-                SecureSettings.toggleMonochrome(settings.isTimeAllowed(), context.contentResolver)
+                SecureSettings.toggleMonochrome(settings.isAllowed(), context.contentResolver)
             }
         }
     }
