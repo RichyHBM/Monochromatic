@@ -4,6 +4,7 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.support.v4.app.FragmentManager
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.SwitchCompat
 import android.view.MenuItem
 import uk.co.richyhbm.monochromatic.Fragments.AboutFragment
 import uk.co.richyhbm.monochromatic.Fragments.MainFragment
@@ -46,6 +47,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
+        R.id.main_menu_force_color -> {
+            SecureSettings.resetMonochrome(contentResolver)
+            settings.setEnabled(false)
+            MonochromeService.stopService(this)
+            findViewById<SwitchCompat>(R.id.enabled_switch)?.isChecked = false
+            true
+        }
         R.id.main_menu_settings -> {
             if (!supportFragmentManager.lastOnStackIsFragmentOf(PreferencesFragment::class.java.name)) {
                 supportFragmentManager.beginTransaction()
