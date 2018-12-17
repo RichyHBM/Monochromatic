@@ -96,4 +96,12 @@ class Settings(val context: Context) {
     private fun isBatteryAllowed(): Boolean = shouldEnableAtLowBattery() && (getBatteryLevel() <= getLowBatteryLevel())
 
     fun isAllowed(): Boolean = isAlwaysOn() || isTimeAllowed() || isBatteryAllowed()
+
+    fun setSeenNotificationDialog() {
+        setBoolean(R.string.settings_key_show_notification_dialog, true)
+    }
+
+    fun seenNotificationDialog() =
+        getBoolean(R.string.settings_key_show_notification_dialog, false)
+
 }
