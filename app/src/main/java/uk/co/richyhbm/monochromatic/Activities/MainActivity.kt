@@ -20,6 +20,15 @@ import uk.co.richyhbm.monochromatic.Utilities.Settings
 class MainActivity : AppCompatActivity() {
     val settings by lazy { Settings(this) }
 
+    private val preferencesChangeListener = SharedPreferences.OnSharedPreferenceChangeListener { _, _ ->
+        if (settings.isEnabled()) {
+            MonochromeService.startService(this)
+            SecureSettings.toggleMonochrome(settings.isAllowed(), contentResolver)
+        } else {
+            MonochromeService.stopService(this)
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -30,20 +39,20 @@ class MainActivity : AppCompatActivity() {
         if(!Permissions.hasSecureSettingsPermission(this)) {
             NoPermissionsDialogFragment().show(supportFragmentManager, "NoPermissionsDialog")
             settings.setEnabled(false)
+        } else {
+            if (settings.isEnabled()) {
+                MonochromeService.startService(this)
+                SecureSettings.toggleMonochrome(settings.isAllowed(), contentResolver)
+            } else {
+                MonochromeService.stopService(this)
+            }
         }
 
         supportFragmentManager.beginTransaction()
             .replace(R.id.container, MainFragment())
             .commit()
 
-        settings.registerPreferenceChangeListener(SharedPreferences.OnSharedPreferenceChangeListener { _, _ ->
-            if (settings.isEnabled()) {
-                MonochromeService.startService(this)
-                SecureSettings.toggleMonochrome(settings.isTimeAllowed(), contentResolver)
-            } else {
-                MonochromeService.stopService(this)
-            }
-        })
+        settings.registerPreferenceChangeListener(preferencesChangeListener)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {

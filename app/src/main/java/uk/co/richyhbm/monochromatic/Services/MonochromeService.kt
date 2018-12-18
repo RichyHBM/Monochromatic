@@ -8,6 +8,7 @@ import android.os.IBinder
 import android.support.v4.app.NotificationCompat
 import uk.co.richyhbm.monochromatic.Activities.MainActivity
 import uk.co.richyhbm.monochromatic.R
+import uk.co.richyhbm.monochromatic.Receivers.BatteryReceiver
 import uk.co.richyhbm.monochromatic.Receivers.ScreenChangeReceiver
 import uk.co.richyhbm.monochromatic.Utilities.SecureSettings
 import uk.co.richyhbm.monochromatic.Utilities.Settings
@@ -48,12 +49,14 @@ class MonochromeService : Service() {
     }
 
     private val screenChangeReceiver = ScreenChangeReceiver()
+    private val batteryChangeReceiver = BatteryReceiver()
     private val channelId = "monochromatic_service"
     private val foregroundId = 1234
 
     override fun onCreate() {
         super.onCreate()
         screenChangeReceiver.registerReceiver(this)
+        batteryChangeReceiver.registerReceiver(this)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channelName = getString(R.string.app_name) + " service"
@@ -69,6 +72,7 @@ class MonochromeService : Service() {
     override fun onDestroy() {
         SecureSettings.resetMonochrome(contentResolver)
         screenChangeReceiver.unregisterReceiver(this)
+        batteryChangeReceiver.unregisterReceiver(this)
         super.onDestroy()
     }
 
@@ -99,7 +103,7 @@ class MonochromeService : Service() {
 
         val settings = Settings(this)
         if(!SecureSettings.isMonochromeEnabled(contentResolver)) {
-            SecureSettings.toggleMonochrome(settings.isTimeAllowed(), contentResolver)
+            SecureSettings.toggleMonochrome(settings.isAllowed(), contentResolver)
         }
 
         return Service.START_STICKY

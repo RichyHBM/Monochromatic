@@ -19,11 +19,13 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            resValue "string", "app_name", "Monochromatic"
         }
         debug {
             applicationIdSuffix = ".dev"
             versionNameSuffix = "-dev"
             testCoverageEnabled = true
+            resValue "string", "app_name", "Monochromatic debug"
         }
     }
 }

@@ -35,11 +35,15 @@ class MainFragment : BaseFragment() {
 
             if (settings.isEnabled()) {
                 MonochromeService.startService(requireContext())
-                AlertDialog.Builder(requireContext())
-                    .setMessage(getString(R.string.notification_dismiss_notice))
-                    .setPositiveButton(android.R.string.ok, null)
-                    .create()
-                    .show()
+                if(!settings.seenNotificationDialog()) {
+                    AlertDialog.Builder(requireContext())
+                        .setMessage(getString(R.string.notification_dismiss_notice))
+                        .setPositiveButton(android.R.string.ok) { _, _ ->
+                            settings.setSeenNotificationDialog()
+                        }
+                        .create()
+                        .show()
+                }
             }
             else MonochromeService.stopService(requireContext())
         }

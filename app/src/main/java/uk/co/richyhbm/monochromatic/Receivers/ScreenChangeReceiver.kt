@@ -29,7 +29,7 @@ class ScreenChangeReceiver : BroadcastReceiver() {
     private fun screenOn(context: Context) {
         val settings = Settings(context)
 
-        if(settings.isEnabled() && settings.isTimeAllowed()) {
+        if(settings.isEnabled() && settings.isAllowed()) {
             if(!SecureSettings.isMonochromeEnabled(context.contentResolver)) {
                 SecureSettings.toggleMonochrome(true, context.contentResolver)
             }
@@ -45,7 +45,7 @@ class ScreenChangeReceiver : BroadcastReceiver() {
                     SecureSettings.resetMonochrome(context.contentResolver)
                 }
             } else {
-                SecureSettings.toggleMonochrome(settings.isTimeAllowed(), context.contentResolver)
+                SecureSettings.toggleMonochrome(settings.isAllowed(), context.contentResolver)
             }
         }
     }

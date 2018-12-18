@@ -3,6 +3,11 @@
 
     <SwitchPreference
             android:defaultValue="false"
+            android:title="Always on"
+            android:key="@string/settings_key_always_on" />
+
+    <SwitchPreference
+            android:defaultValue="false"
             android:title="Disable with screen off"
             android:key="@string/settings_key_disable_with_screen_off" />
 
@@ -20,5 +25,14 @@
             android:key="@string/settings_key_disable_time"
             android:title="Disabled time"
             android:summary="00:00" />
+
+    <SwitchPreference
+            android:defaultValue="false"
+            android:title="Enable at low battery"
+            android:key="@string/settings_key_enable_with_low_battery" />
+
+    <Preference
+            android:title="Enable at battery level"
+            android:key="@string/settings_key_enable_with_low_battery_amount" />
 
 </PreferenceScreen>
