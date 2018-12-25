@@ -11,4 +11,5 @@
     <string name="service_enabled">Monochromatic enabled</string>
     <string name="service_disabled">Monochromatic disabled</string>
     <string name="by_richyhbm">By RichyHBM</string>
+    <string name="toggle">Toggle</string>
 </resources>

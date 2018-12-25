@@ -1,17 +1,15 @@
 package uk.co.richyhbm.monochromatic.QuickTiles
 
-import android.content.Intent
 import android.os.Build
 import android.service.quicksettings.Tile
 import android.service.quicksettings.TileService
 import android.support.annotation.RequiresApi
-import uk.co.richyhbm.monochromatic.Receivers.DisableMonochromeReceiver
 import uk.co.richyhbm.monochromatic.Utilities.SecureSettings
 import uk.co.richyhbm.monochromatic.Utilities.Settings
 
 
 @RequiresApi(api = Build.VERSION_CODES.N)
-class QuickDisableTile : TileService() {
+class QuickToggleTile : TileService() {
     private val settings by lazy { Settings(applicationContext)}
 
     override fun onTileAdded() {
@@ -37,12 +35,12 @@ class QuickDisableTile : TileService() {
         super.onClick()
 
         if (settings.isEnabled()) {
-            val disableIntent = Intent(applicationContext, DisableMonochromeReceiver::class.java)
-            sendBroadcast(disableIntent)
-
-            qsTile.state = getTileState()
-            qsTile.updateTile()
+            val ctxResolver = applicationContext.contentResolver
+            val isMonochrome = SecureSettings.isMonochromeEnabled(ctxResolver)
+            SecureSettings.toggleMonochrome(!isMonochrome, ctxResolver)
         }
+        qsTile.state = getTileState()
+        qsTile.updateTile()
     }
 
     private fun getTileState() : Int = if(settings.isEnabled()) {
