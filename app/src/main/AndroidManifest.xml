@@ -35,6 +35,8 @@
         </service>
 
         <receiver android:name=".Receivers.DisableMonochromeReceiver"/>
+        <receiver android:name=".Receivers.DisableMonochromeForScreenReceiver"/>
+        <receiver android:name=".Receivers.DisableMonochromeForSessionReceiver"/>
 
         <receiver android:name=".Widgets.DisableScreenOnWidget" >
             <intent-filter>

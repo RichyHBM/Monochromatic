@@ -20,6 +20,9 @@ class ScreenChangeReceiver : BroadcastReceiver() {
     }
 
     override fun onReceive(context: Context, intent: Intent) {
+        val settings = Settings(context)
+        settings.resetScreenDisabled()
+
         when (intent.action) {
             Intent.ACTION_SCREEN_ON -> screenOn(context)
             Intent.ACTION_SCREEN_OFF -> screenOff(context)

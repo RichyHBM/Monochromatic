@@ -13,12 +13,13 @@ import java.util.*
 class Settings(val context: Context) {
     private val settings = PreferenceManager.getDefaultSharedPreferences(context)
 
-    private fun getBoolean(keyId: Int, defaultValue: Boolean) = settings.getBoolean(context.getString(keyId), defaultValue)
+    private fun getBoolean(keyId: Int, defaultValue: Boolean) =
+        settings.getBoolean(context.getString(keyId), defaultValue)
 
     private fun getIntValue(keyId: Int, defaultValue: Int): Int {
         return try {
             settings.getInt(context.getString(keyId), defaultValue)
-        }catch (e: Exception) {
+        } catch (e: Exception) {
             defaultValue
         }
     }
@@ -39,7 +40,10 @@ class Settings(val context: Context) {
         settings.registerOnSharedPreferenceChangeListener(listener)
     }
 
-    fun isEnabled() = getBoolean(R.string.settings_key_monochromatic_enabled, false) && Permissions.hasSecureSettingsPermission(context)
+    fun isEnabled() =
+        getBoolean(R.string.settings_key_monochromatic_enabled, false) && Permissions.hasSecureSettingsPermission(
+            context
+        )
 
     fun setEnabled(b: Boolean) {
         setBoolean(R.string.settings_key_monochromatic_enabled, b)
@@ -68,10 +72,10 @@ class Settings(val context: Context) {
         val hour = calendar.get(Calendar.HOUR_OF_DAY)
         val minute = calendar.get(Calendar.MINUTE)
         val nowTime = hour * 60 + minute
-        return if(getDisableTime() < getEnableTime())
-            getEnableTime() < nowTime || nowTime < getDisableTime()
+        return if (getDisableTime() < getEnableTime())
+            getEnableTime() <= nowTime || nowTime < getDisableTime()
         else
-            getEnableTime() < nowTime && nowTime < getDisableTime()
+            getEnableTime() <= nowTime && nowTime < getDisableTime()
     }
 
     private fun isTimeAllowed(): Boolean = shouldEnableAtTime() && isNowInEnabledTime()
@@ -95,7 +99,14 @@ class Settings(val context: Context) {
 
     private fun isBatteryAllowed(): Boolean = shouldEnableAtLowBattery() && (getBatteryLevel() <= getLowBatteryLevel())
 
-    fun isAllowed(): Boolean = isAlwaysOn() || isTimeAllowed() || isBatteryAllowed()
+    fun isAllowed(): Boolean {
+        val allowed = isAlwaysOn() || isTimeAllowed() || isBatteryAllowed()
+
+        if(!allowed)
+            setBoolean(R.string.settings_key_disable_session, false)
+
+        return allowed && !isQuickDisabled()
+    }
 
     fun setSeenNotificationDialog() {
         setBoolean(R.string.settings_key_show_notification_dialog, true)
@@ -104,4 +115,15 @@ class Settings(val context: Context) {
     fun seenNotificationDialog() =
         getBoolean(R.string.settings_key_show_notification_dialog, false)
 
+    private fun isQuickDisabled() = isScreenDisabled() || isSessionDisabled()
+
+    private fun isScreenDisabled() = getBoolean(R.string.settings_key_disable_screen, false)
+
+    private fun isSessionDisabled() = getBoolean(R.string.settings_key_disable_session, false)
+
+    fun screenDisabled() = setBoolean(R.string.settings_key_disable_screen, true)
+    fun resetScreenDisabled() = setBoolean(R.string.settings_key_disable_screen, false)
+
+    fun sessionDisabled() = setBoolean(R.string.settings_key_disable_session, true)
+    fun resetSessionDisabled() = setBoolean(R.string.settings_key_disable_session, false)
 }
