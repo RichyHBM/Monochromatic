@@ -4,7 +4,8 @@ import android.os.Build
 import android.service.quicksettings.Tile
 import android.service.quicksettings.TileService
 import android.support.annotation.RequiresApi
-import uk.co.richyhbm.monochromatic.Utilities.SecureSettings
+import uk.co.richyhbm.monochromatic.Services.MonochromeService
+import uk.co.richyhbm.monochromatic.Utilities.Permissions
 import uk.co.richyhbm.monochromatic.Utilities.Settings
 
 
@@ -34,17 +35,18 @@ class QuickToggleTile : TileService() {
     override fun onClick() {
         super.onClick()
 
-        if (settings.isEnabled()) {
-            val ctxResolver = applicationContext.contentResolver
-            val isMonochrome = SecureSettings.isMonochromeEnabled(ctxResolver)
-            SecureSettings.toggleMonochrome(!isMonochrome, ctxResolver)
+        if (Permissions.hasSecureSettingsPermission(applicationContext)) {
+            settings.setEnabled(!settings.isEnabled())
+            if(settings.isEnabled()) MonochromeService.startService(applicationContext)
+            else MonochromeService.stopService(applicationContext)
         }
+
         qsTile.state = getTileState()
         qsTile.updateTile()
     }
 
-    private fun getTileState() : Int = if(settings.isEnabled()) {
-        if(SecureSettings.isMonochromeEnabled(applicationContext.contentResolver)) Tile.STATE_ACTIVE else Tile.STATE_INACTIVE
+    private fun getTileState() : Int = if(Permissions.hasSecureSettingsPermission(applicationContext)) {
+        if(settings.isEnabled()) Tile.STATE_ACTIVE else Tile.STATE_INACTIVE
     } else Tile.STATE_UNAVAILABLE
 
 }
