@@ -26,7 +26,7 @@
 
         <service android:name=".Services.MonochromeService" android:exported="false"/>
         <service android:name=".QuickTiles.QuickToggleTile"
-            android:icon="@drawable/ic_invert_colors_off_black"
+            android:icon="@drawable/ic_filter_b_and_w_black"
             android:label="@string/toggle"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
             <intent-filter>

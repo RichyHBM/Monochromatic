@@ -3,6 +3,7 @@ package uk.co.richyhbm.monochromatic.Receivers
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import uk.co.richyhbm.monochromatic.Utilities.SecureSettings
 import uk.co.richyhbm.monochromatic.Utilities.Settings
 
 class DisableMonochromeForSessionReceiver: BroadcastReceiver() {
@@ -11,6 +12,7 @@ class DisableMonochromeForSessionReceiver: BroadcastReceiver() {
             val settings = Settings(context)
             if(settings.isEnabled()) {
                 settings.sessionDisabled()
+                SecureSettings.toggleMonochrome(settings.isAllowed(), context.contentResolver)
             }
         }
     }
