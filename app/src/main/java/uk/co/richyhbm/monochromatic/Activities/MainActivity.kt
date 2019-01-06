@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
     private val preferencesChangeListener = SharedPreferences.OnSharedPreferenceChangeListener { _, _ ->
         if (settings.isEnabled()) {
             MonochromeService.startService(this)
-            SecureSettings.toggleMonochrome(settings.isAllowed(), contentResolver)
+            SecureSettings.toggleFilters(settings.isAllowed(), contentResolver, settings)
         } else {
             MonochromeService.stopService(this)
         }
@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
         } else {
             if (settings.isEnabled()) {
                 MonochromeService.startService(this)
-                SecureSettings.toggleMonochrome(settings.isAllowed(), contentResolver)
+                SecureSettings.toggleFilters(settings.isAllowed(), contentResolver, settings)
             } else {
                 MonochromeService.stopService(this)
             }
@@ -57,7 +57,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
         R.id.main_menu_force_color -> {
-            SecureSettings.resetMonochrome(contentResolver)
+            SecureSettings.resetAllFilters(contentResolver, settings)
             settings.setEnabled(false)
             MonochromeService.stopService(this)
             findViewById<SwitchCompat>(R.id.enabled_switch)?.isChecked = false

@@ -1,6 +1,7 @@
 package uk.co.richyhbm.monochromatic.Fragments
 
 import android.app.AlertDialog
+import android.os.Build
 import android.os.Bundle
 import android.view.*
 import kotlinx.android.synthetic.main.main_fragment.*
@@ -35,14 +36,15 @@ class MainFragment : BaseFragment() {
 
             if (settings.isEnabled()) {
                 MonochromeService.startService(requireContext())
-                if(!settings.seenNotificationDialog()) {
-                    AlertDialog.Builder(requireContext())
-                        .setMessage(getString(R.string.notification_dismiss_notice))
-                        .setPositiveButton(android.R.string.ok) { _, _ ->
-                            settings.setSeenNotificationDialog()
-                        }
-                        .create()
-                        .show()
+                if(!settings.seenNotificationDialog() &&
+                    Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        AlertDialog.Builder(requireContext())
+                            .setMessage(getString(R.string.notification_dismiss_notice))
+                            .setPositiveButton(android.R.string.ok) { _, _ ->
+                                settings.setSeenNotificationDialog()
+                            }
+                            .create()
+                            .show()
                 }
             }
             else MonochromeService.stopService(requireContext())

@@ -11,7 +11,7 @@ class DisableMonochromeReceiver: BroadcastReceiver() {
         if(context != null) {
             val settings = Settings(context)
             if(settings.isEnabled() && SecureSettings.isMonochromeEnabled(context.contentResolver)) {
-                SecureSettings.resetMonochrome(context.contentResolver)
+                SecureSettings.resetAllFilters(context.contentResolver, settings)
             }
         }
     }

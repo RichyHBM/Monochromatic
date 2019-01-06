@@ -13,6 +13,7 @@ import uk.co.richyhbm.monochromatic.Receivers.BatteryReceiver
 import uk.co.richyhbm.monochromatic.Receivers.DisableMonochromeForScreenReceiver
 import uk.co.richyhbm.monochromatic.Receivers.DisableMonochromeForSessionReceiver
 import uk.co.richyhbm.monochromatic.Receivers.ScreenChangeReceiver
+import uk.co.richyhbm.monochromatic.Utilities.Constants
 import uk.co.richyhbm.monochromatic.Utilities.SecureSettings
 import uk.co.richyhbm.monochromatic.Utilities.Settings
 import java.util.*
@@ -23,7 +24,7 @@ class MonochromeService : Service() {
     companion object {
         fun startService(context: Context) {
             val settings = Settings(context)
-            if(settings.isEnabled() && !isRunning(context)) {
+            if (settings.isEnabled()) {
                 val startServiceIntent = Intent(context, MonochromeService::class.java)
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     context.startForegroundService(startServiceIntent)
@@ -39,7 +40,7 @@ class MonochromeService : Service() {
         }
 
         @Suppress("DEPRECATION")
-        fun isRunning(context: Context) : Boolean {
+        fun isRunning(context: Context): Boolean {
             val manager = context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
             for (service in manager.getRunningServices(Integer.MAX_VALUE)) {
                 if (MonochromeService::class.java.name == service.service.className) {
@@ -48,8 +49,6 @@ class MonochromeService : Service() {
             }
             return false
         }
-
-
     }
 
     private val screenChangeReceiver = ScreenChangeReceiver()
@@ -65,10 +64,25 @@ class MonochromeService : Service() {
         screenChangeReceiver.registerReceiver(this)
         batteryChangeReceiver.registerReceiver(this)
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channelName = getString(R.string.app_name) + " service"
+            val serviceChannel = NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_MIN)
+            serviceChannel.lockscreenVisibility = Notification.VISIBILITY_SECRET
+            serviceChannel.setShowBadge(false)
+            val notificationManager = getSystemService(NotificationManager::class.java)
+            notificationManager.createNotificationChannel(serviceChannel)
+        }
+    }
+
+    private fun setupToggleHandler(filterBluelight: Boolean) {
         handlerTask = Runnable {
             val settings = Settings(this)
-            if(settings.isEnabled()) {
-                SecureSettings.toggleMonochrome(settings.isAllowed(), contentResolver)
+            if (settings.isEnabled()) {
+                if(filterBluelight) {
+                    SecureSettings.toggleMonochromeAndBluelightFilter(settings.isAllowed(), contentResolver)
+                } else {
+                    SecureSettings.toggleFilters(settings.isAllowed(), contentResolver, settings)
+                }
             }
 
             handler.postDelayed(handlerTask, 1000 * 60)
@@ -79,20 +93,11 @@ class MonochromeService : Service() {
         c.set(Calendar.SECOND, 0)
         c.set(Calendar.MILLISECOND, 0)
         handler.postDelayed(handlerTask, c.timeInMillis - System.currentTimeMillis())
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channelName = getString(R.string.app_name) + " service"
-            val serviceChannel = NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_MIN)
-            serviceChannel.lockscreenVisibility = Notification.VISIBILITY_SECRET
-            serviceChannel.setShowBadge(false)
-            val notificationManager = getSystemService(NotificationManager::class.java)
-            notificationManager.createNotificationChannel(serviceChannel)
-        }
-
     }
 
     override fun onDestroy() {
-        SecureSettings.resetMonochrome(contentResolver)
+        SecureSettings.resetAllFilters(contentResolver, Settings(applicationContext))
+        SecureSettings.resetBlueFilterTemperature(contentResolver)
         screenChangeReceiver.unregisterReceiver(this)
         batteryChangeReceiver.unregisterReceiver(this)
         handler.removeCallbacks(handlerTask)
@@ -106,17 +111,25 @@ class MonochromeService : Service() {
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
         super.onStartCommand(intent, flags, startId)
 
+        val settings = Settings(this)
+        val filterBluelight = settings.isFilterBluelightEnabled()
+        val bluelightFilterTemperature = settings.getBluelightFilterTemperature()
+
+        setupToggleHandler(filterBluelight)
+        SecureSettings.setBlueFilterTemperature(bluelightFilterTemperature, contentResolver)
+
         val mainIntent = Intent(applicationContext, MainActivity::class.java)
         mainIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
         val pendingMainIntent = PendingIntent.getActivity(applicationContext, Random.nextInt(), mainIntent, 0)
 
         val disableScreenIntent = Intent(applicationContext, DisableMonochromeForScreenReceiver::class.java)
-        val pendingDisableScreenIntent = PendingIntent.getBroadcast(applicationContext, Random.nextInt(), disableScreenIntent, 0)
+        val pendingDisableScreenIntent =
+            PendingIntent.getBroadcast(applicationContext, Random.nextInt(), disableScreenIntent, 0)
 
 
         val disableSessionIntent = Intent(applicationContext, DisableMonochromeForSessionReceiver::class.java)
-        val pendingDisableSessionIntent = PendingIntent.getBroadcast(applicationContext, Random.nextInt(), disableSessionIntent, 0)
-
+        val pendingDisableSessionIntent =
+            PendingIntent.getBroadcast(applicationContext, Random.nextInt(), disableSessionIntent, 0)
 
         val notification = NotificationCompat.Builder(this, channelId)
             .setSmallIcon(R.drawable.ic_filter_b_and_w_black)
@@ -125,8 +138,16 @@ class MonochromeService : Service() {
             .setStyle(NotificationCompat.DecoratedCustomViewStyle())
             .setVisibility(Notification.VISIBILITY_SECRET)
             .setPriority(NotificationCompat.PRIORITY_MIN)
-            .addAction(R.drawable.ic_invert_colors_off_black, getString(R.string.disable_for_screen), pendingDisableScreenIntent)
-            .addAction(R.drawable.ic_invert_colors_off_black, getString(R.string.disable_for_session), pendingDisableSessionIntent)
+            .addAction(
+                R.drawable.ic_invert_colors_off_black,
+                getString(R.string.disable_for_screen),
+                pendingDisableScreenIntent
+            )
+            .addAction(
+                R.drawable.ic_invert_colors_off_black,
+                getString(R.string.disable_for_session),
+                pendingDisableSessionIntent
+            )
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -135,12 +156,17 @@ class MonochromeService : Service() {
 
         startForeground(foregroundId, notification.build())
 
-        val settings = Settings(this)
         settings.resetScreenDisabled()
         settings.resetSessionDisabled()
 
-        if(!SecureSettings.isMonochromeEnabled(contentResolver)) {
-            SecureSettings.toggleMonochrome(settings.isAllowed(), contentResolver)
+        if (filterBluelight) {
+            if (!SecureSettings.isMonochromeAndBluelightFilterEnabled(contentResolver)) {
+                SecureSettings.toggleMonochromeAndBluelightFilter(settings.isAllowed(), contentResolver)
+            }
+        } else {
+            if (!SecureSettings.isMonochromeEnabled(contentResolver)) {
+                SecureSettings.toggleFilters(settings.isAllowed(), contentResolver, settings)
+            }
         }
 
         return Service.START_STICKY
