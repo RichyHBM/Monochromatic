@@ -20,12 +20,18 @@ import uk.co.richyhbm.monochromatic.Utilities.Settings
 class MainActivity : AppCompatActivity() {
     val settings by lazy { Settings(this) }
 
-    private val preferencesChangeListener = SharedPreferences.OnSharedPreferenceChangeListener { _, _ ->
-        if (settings.isEnabled()) {
-            MonochromeService.startService(this)
-            SecureSettings.toggleFilters(settings.isAllowed(), contentResolver, settings)
-        } else {
-            MonochromeService.stopService(this)
+    private val preferencesChangeListener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
+        when(key) {
+            getString(R.string.settings_key_disable_screen) -> {}
+            getString(R.string.settings_key_disable_session) -> {}
+            else -> {
+                if (settings.isEnabled()) {
+                    MonochromeService.startService(this)
+                    SecureSettings.toggleFilters(settings.isAllowed(), contentResolver, settings)
+                } else {
+                    MonochromeService.stopService(this)
+                }
+            }
         }
     }
 

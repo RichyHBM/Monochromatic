@@ -12,7 +12,7 @@ class DisableMonochromeForScreenReceiver: BroadcastReceiver() {
             val settings = Settings(context)
             if(settings.isEnabled()) {
                 settings.screenDisabled()
-                SecureSettings.toggleMonochrome(settings.isAllowed(), context.contentResolver)
+                SecureSettings.toggleFilters(settings.isAllowed(), context.contentResolver, settings)
             }
         }
     }
