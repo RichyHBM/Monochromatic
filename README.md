@@ -11,3 +11,5 @@ the use of an overlay screen, to help relax your eyes at night and disincentivis
 [<img src="https://play.google.com/intl/en_gb/badges/images/generic/en_badge_web_generic.png"
      alt="Get it on the Play Store"
      height="90">](https://play.google.com/store/apps/details?id=uk.co.richyhbm.monochromatic)
+
+ADB command to grant required permission: adb shell pm grant uk.co.richyhbm.monochromatic android.permission.WRITE_SECURE_SETTINGS
