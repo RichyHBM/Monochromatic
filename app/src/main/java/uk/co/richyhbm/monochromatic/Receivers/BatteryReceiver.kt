@@ -29,9 +29,9 @@ class BatteryReceiver : BroadcastReceiver() {
             val level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 0)
 
             if(level <= settings.getLowBatteryLevel()) {
-                SecureSettings.toggleMonochrome(true, context.contentResolver)
+                SecureSettings.toggleFilters(true, context.contentResolver, settings)
             } else {
-                SecureSettings.toggleMonochrome(settings.isAllowed(), context.contentResolver)
+                SecureSettings.toggleFilters(settings.isAllowed(), context.contentResolver, settings)
             }
         }
     }

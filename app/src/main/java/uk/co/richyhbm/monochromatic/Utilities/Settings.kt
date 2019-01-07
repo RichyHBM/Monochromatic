@@ -51,6 +51,8 @@ class Settings(val context: Context) {
 
     private fun isAlwaysOn() = getBoolean(R.string.settings_key_always_on, false)
 
+    fun isFilterBluelightEnabled() = getBoolean(R.string.settings_key_bluelight_filter_enabled, false)
+
     fun shouldDisableOnScreenOff() = getBoolean(R.string.settings_key_disable_with_screen_off, false)
 
     fun shouldEnableAtTime() = getBoolean(R.string.settings_key_enable_with_time, false)
@@ -98,6 +100,12 @@ class Settings(val context: Context) {
     }
 
     private fun isBatteryAllowed(): Boolean = shouldEnableAtLowBattery() && (getBatteryLevel() <= getLowBatteryLevel())
+
+    fun setBluelightFilterTemperature(amount: Int) {
+        setInt(R.string.settings_key_bluelight_filter_temperature, amount)
+    }
+
+    fun getBluelightFilterTemperature(): Int = getIntValue(R.string.settings_key_bluelight_filter_temperature, Constants.defaultBluelightFilterTemperature)
 
     fun isAllowed(): Boolean {
         val allowed = isAlwaysOn() || isTimeAllowed() || isBatteryAllowed()

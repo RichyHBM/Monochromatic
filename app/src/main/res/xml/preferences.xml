@@ -8,6 +8,16 @@
 
     <SwitchPreference
             android:defaultValue="false"
+            android:title="Also control bluelight filter"
+            android:key="@string/settings_key_bluelight_filter_enabled" />
+
+    <Preference
+            android:defaultValue="false"
+            android:title="Bluelight filter temperature"
+            android:key="@string/settings_key_bluelight_filter_temperature" />
+
+    <SwitchPreference
+            android:defaultValue="false"
             android:title="Disable with screen off"
             android:key="@string/settings_key_disable_with_screen_off" />
 

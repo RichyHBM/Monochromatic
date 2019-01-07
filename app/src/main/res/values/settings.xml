@@ -11,4 +11,6 @@
     <string name="settings_key_disable_screen" translatable="false">pref_key_disable_screen</string>
     <string name="settings_key_disable_session" translatable="false">pref_key_disable_session</string>
     <string name="settings_key_show_notification_dialog" translatable="false">pref_key_show_notification_dialog</string>
+    <string name="settings_key_bluelight_filter_enabled" translatable="false">pref_key_bluelight_filter_enabled</string>
+    <string name="settings_key_bluelight_filter_temperature" translatable="false">pref_key_bluelight_filter_temperature</string>
 </resources>

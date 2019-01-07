@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.preference.Preference
 import android.support.v7.preference.PreferenceFragmentCompat
 import android.widget.NumberPicker
+import android.widget.SeekBar
 import uk.co.richyhbm.monochromatic.R
 import uk.co.richyhbm.monochromatic.Utilities.Settings
 import java.util.concurrent.TimeUnit
@@ -31,6 +32,7 @@ class PreferencesFragment : PreferenceFragmentCompat() {
         val enableTime = findPreference(getString(R.string.settings_key_enable_time))
         val disableTime = findPreference(getString(R.string.settings_key_disable_time))
         val lowBatteryAmount = findPreference(getString(R.string.settings_key_enable_with_low_battery_amount))
+        val bluelightFilterTemperature = findPreference(getString(R.string.settings_key_bluelight_filter_temperature))
 
         findPreference(getString(R.string.settings_key_enable_with_time)).setOnPreferenceChangeListener { _, newValue ->
             newValue as Boolean
@@ -45,61 +47,117 @@ class PreferencesFragment : PreferenceFragmentCompat() {
             true
         }
 
+        val deviceHasSystemBluelightFilter = android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O
+        val blueFilterSwitch = findPreference(getString(R.string.settings_key_bluelight_filter_enabled))
+        blueFilterSwitch.isVisible = deviceHasSystemBluelightFilter
+        blueFilterSwitch.setOnPreferenceChangeListener { _, newValue ->
+            newValue as Boolean
+            bluelightFilterTemperature.isVisible = newValue
+            true
+        }
+
         enableTime.isVisible = settings.shouldEnableAtTime()
         disableTime.isVisible = settings.shouldEnableAtTime()
         lowBatteryAmount.isVisible = settings.shouldEnableAtLowBattery()
+        bluelightFilterTemperature.isVisible = settings.isFilterBluelightEnabled()
 
         enableTime.summary = getTimeToString(settings.getEnableTime())
         disableTime.summary = getTimeToString(settings.getDisableTime())
         lowBatteryAmount.summary = settings.getLowBatteryLevel().toString() + "%"
+        bluelightFilterTemperature.summary = settings.getBluelightFilterTemperature().toString()
     }
 
     override fun onPreferenceTreeClick(preference: Preference): Boolean =
         when (preference.key) {
             getString(R.string.settings_key_enable_time) -> {
-                showTimePickerDialog {
+                showTimePickerDialog(settings.getEnableTime()) {
                     settings.setEnableTime(it)
                     findPreference(getString(R.string.settings_key_enable_time)).summary = getTimeToString(it)
                 }
             }
             getString(R.string.settings_key_disable_time) -> {
-                showTimePickerDialog {
+                showTimePickerDialog(settings.getDisableTime()) {
                     settings.setDisableTime(it)
                     findPreference(getString(R.string.settings_key_disable_time)).summary = getTimeToString(it)
                 }
             }
             getString(R.string.settings_key_enable_with_low_battery_amount) -> {
-                showNumberPickerDialog {
+                showNumberPickerDialog(settings.getLowBatteryLevel()) {
                     settings.setLowBatteryLevel(it)
-                    findPreference(getString(R.string.settings_key_enable_with_low_battery_amount)).summary = it.toString() + "%"
+                    findPreference(getString(R.string.settings_key_enable_with_low_battery_amount)).summary =
+                            it.toString() + "%"
+                }
+            }
+            getString(R.string.settings_key_bluelight_filter_temperature) -> {
+                showTemperatureSeekBarDialog {
+                    settings.setBluelightFilterTemperature(it)
+                    findPreference(getString(R.string.settings_key_bluelight_filter_temperature)).summary =
+                            settings.getBluelightFilterTemperature().toString()
                 }
             }
             else -> super.onPreferenceTreeClick(preference)
         }
 
-    private fun showTimePickerDialog(callback: (Int) -> Unit ): Boolean {
-        TimePickerDialog(requireContext(),
+    private fun showTimePickerDialog(currentTime: Int, callback: (Int) -> Unit): Boolean {
+        TimePickerDialog(
+            requireContext(),
             { _, hour, minute ->
                 val newValue = hour * 60 + minute
                 callback(newValue)
             },
-            TimeUnit.MINUTES.toHours(settings.getEnableTime().toLong()).toInt(),
-            settings.getEnableTime() % 60,
-            true).show()
+            TimeUnit.MINUTES.toHours(currentTime.toLong()).toInt(),
+            currentTime % 60,
+            true
+        ).show()
         return true
     }
 
-    private fun showNumberPickerDialog(callback: (Int) -> Unit ): Boolean {
+    private fun showTemperatureSeekBarDialog(callback: (Int) -> Unit): Boolean {
+        val currentVal = settings.getBluelightFilterTemperature()
+        return showSeekBarDialog(currentVal, callback)
+    }
+
+    private fun showSeekBarDialog(currentProgress: Int, callback: (Int) -> Unit): Boolean {
+        val minTemp = 100
+        val maxTemp = 6000
+        val numSteps = 100
+        val stepValue = (maxTemp - minTemp) / numSteps
+        fun progressToTemperature(progress: Int) = minTemp + (progress * stepValue)
+        fun temperatureToProgress(temperature: Int) = (temperature - minTemp) / stepValue
+
+        val seekbar = SeekBar(context)
+
+        seekbar.progress = temperatureToProgress(currentProgress)
+        seekbar.max = numSteps
+        seekbar.setPadding(50, 50, 50, 0)
+        seekbar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onStartTrackingTouch(p0: SeekBar?) {
+            }
+
+            override fun onStopTrackingTouch(p0: SeekBar?) {
+            }
+
+            override fun onProgressChanged(p0: SeekBar?, newVal: Int, p2: Boolean) {
+                val newTemp = progressToTemperature(newVal)
+                callback(newTemp)
+            }
+        })
+        AlertDialog.Builder(context).setView(seekbar).setPositiveButton(android.R.string.ok, null).show()
+        return true
+    }
+
+    private fun showNumberPickerDialog(currentVal: Int, callback: (Int) -> Unit): Boolean {
         val numberPicker = NumberPicker(context)
         numberPicker.minValue = 0
         numberPicker.maxValue = 100
+        numberPicker.value = currentVal
         numberPicker.wrapSelectorWheel = false
         numberPicker.setOnValueChangedListener { _, _, newVal -> callback(newVal) }
         AlertDialog.Builder(context).setView(numberPicker).setPositiveButton(android.R.string.ok, null).show()
         return true
     }
 
-    private fun getTimeToString(time: Int) : String {
+    private fun getTimeToString(time: Int): String {
         val minutes = time % 60
         val hours = TimeUnit.MINUTES.toHours(time.toLong())
         return String.format("%02d:%02d", hours, minutes)
