@@ -17,10 +17,17 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
+
         <activity android:name=".Activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".Activities.QuickTilePreferencesActivity">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE_PREFERENCES"/>
             </intent-filter>
         </activity>
 
@@ -33,12 +40,26 @@
                 <action android:name="android.service.quicksettings.action.QS_TILE" />
             </intent-filter>
         </service>
+        <service android:name=".QuickTiles.DisableTempTile"
+                 android:icon="@drawable/ic_invert_colors_off_black"
+                 android:label="@string/disable"
+                 android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
 
-        <receiver android:name=".Receivers.DisableMonochromeReceiver"/>
         <receiver android:name=".Receivers.DisableMonochromeForScreenReceiver"/>
         <receiver android:name=".Receivers.DisableMonochromeForSessionReceiver"/>
 
         <receiver android:name=".Widgets.DisableScreenOnWidget" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider" android:resource="@xml/disable_screen_on_appwidget_info" />
+        </receiver>
+
+        <receiver android:name=".Widgets.DisableSessionOnWidget" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
