@@ -13,7 +13,8 @@
     <string name="by_richyhbm">By RichyHBM</string>
     <string name="toggle">Monochrome</string>
 
-    <string name="disable">disable</string>
+    <string name="disable">Disable</string>
     <string name="disable_for_screen">Screen</string>
     <string name="disable_for_session">Session</string>
+    <string name="share">Share</string>
 </resources>
