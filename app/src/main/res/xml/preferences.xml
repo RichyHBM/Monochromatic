@@ -18,11 +18,6 @@
 
     <SwitchPreference
             android:defaultValue="false"
-            android:title="Disable with screen off"
-            android:key="@string/settings_key_disable_with_screen_off" />
-
-    <SwitchPreference
-            android:defaultValue="false"
             android:title="Enable at a specific time"
             android:key="@string/settings_key_enable_with_time" />
 
