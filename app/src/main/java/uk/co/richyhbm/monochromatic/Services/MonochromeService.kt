@@ -13,7 +13,6 @@ import uk.co.richyhbm.monochromatic.Receivers.BatteryReceiver
 import uk.co.richyhbm.monochromatic.Receivers.DisableMonochromeForScreenReceiver
 import uk.co.richyhbm.monochromatic.Receivers.DisableMonochromeForSessionReceiver
 import uk.co.richyhbm.monochromatic.Receivers.ScreenChangeReceiver
-import uk.co.richyhbm.monochromatic.Utilities.Constants
 import uk.co.richyhbm.monochromatic.Utilities.SecureSettings
 import uk.co.richyhbm.monochromatic.Utilities.Settings
 import java.util.*
@@ -135,7 +134,6 @@ class MonochromeService : Service() {
             .setSmallIcon(R.drawable.ic_filter_b_and_w_black)
             .setContentIntent(pendingMainIntent)
             .setOngoing(true)
-            .setStyle(NotificationCompat.DecoratedCustomViewStyle())
             .setVisibility(Notification.VISIBILITY_SECRET)
             .setPriority(NotificationCompat.PRIORITY_MIN)
             .addAction(

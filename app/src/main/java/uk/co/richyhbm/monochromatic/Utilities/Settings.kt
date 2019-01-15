@@ -53,8 +53,6 @@ class Settings(val context: Context) {
 
     fun isFilterBluelightEnabled() = getBoolean(R.string.settings_key_bluelight_filter_enabled, false)
 
-    fun shouldDisableOnScreenOff() = getBoolean(R.string.settings_key_disable_with_screen_off, false)
-
     fun shouldEnableAtTime() = getBoolean(R.string.settings_key_enable_with_time, false)
 
     fun setEnableTime(minutesAfterMidnight: Int) {

@@ -41,13 +41,7 @@ class ScreenChangeReceiver : BroadcastReceiver() {
         val settings = Settings(context)
 
         if(settings.isEnabled()) {
-            if(settings.shouldDisableOnScreenOff()) {
-                if(SecureSettings.isMonochromeEnabled(context.contentResolver)) {
-                    SecureSettings.resetAllFilters(context.contentResolver, settings)
-                }
-            } else {
-                SecureSettings.toggleFilters(settings.isAllowed(), context.contentResolver, settings)
-            }
+            SecureSettings.toggleFilters(settings.isAllowed(), context.contentResolver, settings)
         }
     }
 }
