@@ -10,8 +10,8 @@ android {
         applicationId "uk.co.richyhbm.monochromatic"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 11
-        versionName "0.6.2"
+        versionCode 12
+        versionName "0.6.3"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
