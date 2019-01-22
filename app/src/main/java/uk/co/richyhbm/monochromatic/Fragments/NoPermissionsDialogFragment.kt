@@ -4,12 +4,15 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.content.DialogInterface
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
 import uk.co.richyhbm.monochromatic.BuildConfig
 import uk.co.richyhbm.monochromatic.R
 
+
 class NoPermissionsDialogFragment : DialogFragment() {
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val builder = AlertDialog.Builder(activity)
 
@@ -19,8 +22,11 @@ class NoPermissionsDialogFragment : DialogFragment() {
         val adbCommand = context!!.getString(R.string.adb_command, BuildConfig.APPLICATION_ID, permission)
 
         builder.setMessage(context!!.getString(R.string.grant_permission_adb, adbCommand))
-            .setNeutralButton(R.string.share, shareAdbCommand())
-            .setPositiveButton(android.R.string.ok) { _, _ -> dismiss() }
+            .setNeutralButton(R.string.share_command, shareAdbCommand())
+            .setPositiveButton(R.string.wiki) { _, _ ->
+                startActivity( Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/RichyHBM/Monochromatic/wiki")))
+            }
+
         return builder.create()
     }
 
@@ -39,7 +45,7 @@ class NoPermissionsDialogFragment : DialogFragment() {
                 putExtra(Intent.EXTRA_TEXT, adbCommand)
                 type = "text/plain"
             }
-            startActivity(Intent.createChooser(sendIntent, getString(R.string.share)))
+            startActivity(Intent.createChooser(sendIntent, getString(R.string.share_command)))
         }
     }
 
