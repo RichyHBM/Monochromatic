@@ -7,53 +7,52 @@
         android:layout_height="match_parent"
         tools:context=".Fragments.MainFragment">
 
-    <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" android:gravity="center_horizontal" android:layout_margin="16dp">
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal"
+                android:layout_margin="16dp">
 
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="@string/app_name"
-                android:fontFamily="sans-serif-light"
-                android:textSize="42sp"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/app_info_1"
+                    android:layout_marginTop="16dp"/>
 
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="@string/app_info_1"
-                android:textStyle="bold"
-                android:layout_marginTop="24dp"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/app_info_2"
+                    android:layout_marginTop="16dp"/>
 
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="@string/app_info_2"
-                android:textStyle="bold"
-                android:layout_marginTop="20dp"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/app_info_3"
+                    android:layout_marginTop="16dp"/>
 
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:id="@+id/service_status"
-                android:text="@string/service_disabled"
-                android:layout_marginTop="20dp"
-                android:textColor="#9e9e9e"/>
+            <uk.co.richyhbm.monochromatic.Views.GradientTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:id="@+id/service_status"
+                    android:text="@string/service_disabled"
+                    android:layout_marginTop="20dp"/>
 
-        <android.support.v7.widget.SwitchCompat
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textOff="Inactive "
-                android:textOn="Active "
-                android:id="@+id/enabled_switch"
-                android:textStyle="bold"
-                android:checked="false"
-                android:layout_marginTop="15dp"/>
+            <android.support.v7.widget.SwitchCompat
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textOff="Inactive "
+                    android:textOn="Active "
+                    android:id="@+id/enabled_switch"
+                    android:textStyle="bold"
+                    android:checked="false"
+                    android:layout_marginTop="15dp"/>
 
-    </LinearLayout>
+        </LinearLayout>
+
 </android.support.constraint.ConstraintLayout>

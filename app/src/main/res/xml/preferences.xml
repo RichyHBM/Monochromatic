@@ -2,7 +2,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <SwitchPreference
-            android:defaultValue="false"
+            android:defaultValue="true"
             android:title="Always on"
             android:key="@string/settings_key_always_on" />
 

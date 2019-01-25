@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="rainbow_red">#FF0000</color>
+    <color name="rainbow_orange">#FF7F00</color>
+    <color name="rainbow_yellow">#FFFF00</color>
+    <color name="rainbow_green">#00FF00</color>
+    <color name="rainbow_blue">#0000FF</color>
+    <color name="rainbow_indigo">#4B0082</color>
+    <color name="rainbow_violet">#9400D3</color>
+
+    <integer-array name="rainbow">
+        <item>@color/rainbow_red</item>
+        <item>@color/rainbow_orange</item>
+        <item>@color/rainbow_yellow</item>
+        <item>@color/rainbow_green</item>
+    </integer-array>
+
+</resources>

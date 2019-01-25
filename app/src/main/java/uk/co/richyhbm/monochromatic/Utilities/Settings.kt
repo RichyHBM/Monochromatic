@@ -49,7 +49,7 @@ class Settings(val context: Context) {
         setBoolean(R.string.settings_key_monochromatic_enabled, b)
     }
 
-    private fun isAlwaysOn() = getBoolean(R.string.settings_key_always_on, false)
+    private fun isAlwaysOn() = getBoolean(R.string.settings_key_always_on, true)
 
     fun isFilterBluelightEnabled() = getBoolean(R.string.settings_key_bluelight_filter_enabled, false)
 
