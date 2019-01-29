@@ -3,6 +3,9 @@ package uk.co.richyhbm.monochromatic.Fragments
 import android.app.AlertDialog
 import android.app.TimePickerDialog
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.NumberPicker
 import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
@@ -26,9 +29,7 @@ class PreferencesFragment : PreferenceFragmentCompat() {
         setPreferencesFromResource(R.xml.preferences, rootKey)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val enableTime = findPreference<Preference>(getString(R.string.settings_key_enable_time))
         val disableTime = findPreference<Preference>(getString(R.string.settings_key_disable_time))
         val lowBatteryAmount = findPreference<Preference>(getString(R.string.settings_key_enable_with_low_battery_amount))
@@ -65,6 +66,8 @@ class PreferencesFragment : PreferenceFragmentCompat() {
         disableTime.summary = getTimeToString(settings.getDisableTime())
         lowBatteryAmount.summary = settings.getLowBatteryLevel().toString() + "%"
         bluelightFilterTemperature.summary = settings.getBluelightFilterTemperature().toString()
+
+        return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     override fun onPreferenceTreeClick(preference: Preference): Boolean =
