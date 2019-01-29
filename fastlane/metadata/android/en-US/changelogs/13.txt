@@ -1,0 +1,2 @@
+- Default to always on when first installed
+- Added some color to the main view to be able to easier tell if monochrome is working

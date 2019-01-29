@@ -1,0 +1,4 @@
+- Add second quick tile for disabling functionality temporarily
+- Change widgets to disable functionality temporarily
+- Added share dialog to no permissions dialog
+- Hopefully fixed some bugs
