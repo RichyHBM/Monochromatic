@@ -1,7 +1,7 @@
 package uk.co.richyhbm.monochromatic
 
 import android.os.Build
-import android.support.v7.app.AppCompatDelegate
+import androidx.appcompat.app.AppCompatDelegate
 
 class Application : android.app.Application() {
     companion object {

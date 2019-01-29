@@ -2,9 +2,9 @@ package uk.co.richyhbm.monochromatic.Activities
 
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.support.v4.app.FragmentManager
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.SwitchCompat
+import androidx.fragment.app.FragmentManager
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SwitchCompat
 import android.view.MenuItem
 import uk.co.richyhbm.monochromatic.Fragments.AboutFragment
 import uk.co.richyhbm.monochromatic.Fragments.MainFragment
@@ -102,6 +102,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun FragmentManager.lastOnStackIsFragmentOf(fragmentClassName: String) : Boolean = this.backStackEntryCount > 0
+    private fun androidx.fragment.app.FragmentManager.lastOnStackIsFragmentOf(fragmentClassName: String) : Boolean = this.backStackEntryCount > 0
             && this.getBackStackEntryAt(this.backStackEntryCount - 1).name == fragmentClassName
 }
