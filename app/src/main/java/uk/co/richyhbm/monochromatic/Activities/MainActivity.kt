@@ -1,11 +1,14 @@
 package uk.co.richyhbm.monochromatic.Activities
 
+import android.app.AlertDialog
 import android.content.SharedPreferences
+import android.os.Build
 import android.os.Bundle
-import androidx.fragment.app.FragmentManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SwitchCompat
 import android.view.MenuItem
+import kotlinx.android.synthetic.main.main_activity.*
+import kotlinx.android.synthetic.main.main_fragment.*
 import uk.co.richyhbm.monochromatic.Fragments.AboutFragment
 import uk.co.richyhbm.monochromatic.Fragments.MainFragment
 import uk.co.richyhbm.monochromatic.Fragments.NoPermissionsDialogFragment
@@ -39,8 +42,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.main_activity)
-
-        supportActionBar?.elevation = 0.0f
+        setSupportActionBar(main_bottom_bar)
 
         if(!Permissions.hasSecureSettingsPermission(this)) {
             NoPermissionsDialogFragment().show(supportFragmentManager, "NoPermissionsDialog")
@@ -51,6 +53,26 @@ class MainActivity : AppCompatActivity() {
                 SecureSettings.toggleFilters(settings.isAllowed(), contentResolver, settings)
             } else {
                 MonochromeService.stopService(this)
+            }
+
+            power_toggle.setOnClickListener {
+                val b = !settings.isEnabled()
+                settings.setEnabled(b)
+
+                if (settings.isEnabled()) {
+                    MonochromeService.startService(this)
+                    if(!settings.seenNotificationDialog() &&
+                        Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        AlertDialog.Builder(this)
+                            .setMessage(getString(R.string.notification_dismiss_notice))
+                            .setPositiveButton(android.R.string.ok) { _, _ ->
+                                settings.setSeenNotificationDialog()
+                            }
+                            .create()
+                            .show()
+                    }
+                }
+                else MonochromeService.stopService(this)
             }
         }
 
@@ -66,7 +88,6 @@ class MainActivity : AppCompatActivity() {
             SecureSettings.resetAllFilters(contentResolver, settings)
             settings.setEnabled(false)
             MonochromeService.stopService(this)
-            findViewById<SwitchCompat>(R.id.enabled_switch)?.isChecked = false
             true
         }
         R.id.main_menu_settings -> {

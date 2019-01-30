@@ -10,9 +10,8 @@
 
     <integer-array name="rainbow">
         <item>@color/rainbow_red</item>
-        <item>@color/rainbow_orange</item>
-        <item>@color/rainbow_yellow</item>
         <item>@color/rainbow_green</item>
+        <item>@color/rainbow_blue</item>
     </integer-array>
 
 </resources>
