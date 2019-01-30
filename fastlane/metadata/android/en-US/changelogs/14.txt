@@ -1,0 +1,3 @@
+- Updated to AndroidX
+- Now using Material Components
+- Updated to newer look
