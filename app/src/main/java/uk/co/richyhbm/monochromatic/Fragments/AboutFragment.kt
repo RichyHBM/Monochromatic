@@ -14,9 +14,9 @@ class AboutFragment : BaseFragment() {
     private class LibraryInfo(val name: String, val creator: String, val license: String)
     private val libraries = listOf(
         LibraryInfo("Kotlin", "JetBrains", "Apache 2.0"),
-        LibraryInfo("Support AppCompat", "Google", "Apache 2.0"),
-        LibraryInfo("Support Constraint-Layout", "Google", "Apache 2.0"),
-        LibraryInfo("Support Preference-v7", "Google", "Apache 2.0")
+        LibraryInfo("Material Components", "Google", "Apache 2.0"),
+        LibraryInfo("AndroidX AppCompat", "Google", "Apache 2.0"),
+        LibraryInfo("AndroidX Preference", "Google", "Apache 2.0")
     )
 
 
