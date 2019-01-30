@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="AppTheme" parent="Theme.AppCompat.DayNight">
-        <item name="dialogTheme">@style/Theme.AppCompat.DayNight.Dialog.MinWidth</item>
+    <style name="AppTheme" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="colorPrimaryDark">@android:color/black</item>
+        <item name="colorSecondary">@android:color/holo_orange_dark</item>
+
+        <item name="dialogTheme">@style/Theme.MaterialComponents.Dialog.MinWidth</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
     </style>
 </resources>

@@ -6,12 +6,11 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.support.v4.app.DialogFragment
 import uk.co.richyhbm.monochromatic.BuildConfig
 import uk.co.richyhbm.monochromatic.R
 
 
-class NoPermissionsDialogFragment : DialogFragment() {
+class NoPermissionsDialogFragment : androidx.fragment.app.DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val builder = AlertDialog.Builder(activity)
@@ -30,7 +29,7 @@ class NoPermissionsDialogFragment : DialogFragment() {
         return builder.create()
     }
 
-    override fun onDismiss(dialog: DialogInterface?) {
+    override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
         activity?.finish()
     }

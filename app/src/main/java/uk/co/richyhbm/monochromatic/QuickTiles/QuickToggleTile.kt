@@ -3,7 +3,7 @@ package uk.co.richyhbm.monochromatic.QuickTiles
 import android.os.Build
 import android.service.quicksettings.Tile
 import android.service.quicksettings.TileService
-import android.support.annotation.RequiresApi
+import androidx.annotation.RequiresApi
 import uk.co.richyhbm.monochromatic.Services.MonochromeService
 import uk.co.richyhbm.monochromatic.Utilities.Permissions
 import uk.co.richyhbm.monochromatic.Utilities.Settings

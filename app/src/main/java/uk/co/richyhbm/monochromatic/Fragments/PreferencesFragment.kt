@@ -3,11 +3,14 @@ package uk.co.richyhbm.monochromatic.Fragments
 import android.app.AlertDialog
 import android.app.TimePickerDialog
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.preference.Preference
-import android.support.v7.preference.PreferenceFragmentCompat
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.NumberPicker
 import android.widget.SeekBar
+import androidx.appcompat.app.AppCompatActivity
+import androidx.preference.Preference
+import androidx.preference.PreferenceFragmentCompat
 import uk.co.richyhbm.monochromatic.R
 import uk.co.richyhbm.monochromatic.Utilities.Settings
 import java.util.concurrent.TimeUnit
@@ -26,29 +29,27 @@ class PreferencesFragment : PreferenceFragmentCompat() {
         setPreferencesFromResource(R.xml.preferences, rootKey)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val enableTime = findPreference<Preference>(getString(R.string.settings_key_enable_time))
+        val disableTime = findPreference<Preference>(getString(R.string.settings_key_disable_time))
+        val lowBatteryAmount = findPreference<Preference>(getString(R.string.settings_key_enable_with_low_battery_amount))
+        val bluelightFilterTemperature = findPreference<Preference>(getString(R.string.settings_key_bluelight_filter_temperature))
 
-        val enableTime = findPreference(getString(R.string.settings_key_enable_time))
-        val disableTime = findPreference(getString(R.string.settings_key_disable_time))
-        val lowBatteryAmount = findPreference(getString(R.string.settings_key_enable_with_low_battery_amount))
-        val bluelightFilterTemperature = findPreference(getString(R.string.settings_key_bluelight_filter_temperature))
-
-        findPreference(getString(R.string.settings_key_enable_with_time)).setOnPreferenceChangeListener { _, newValue ->
+        findPreference<Preference>(getString(R.string.settings_key_enable_with_time)).setOnPreferenceChangeListener { _, newValue ->
             newValue as Boolean
             enableTime.isVisible = newValue
             disableTime.isVisible = newValue
             true
         }
 
-        findPreference(getString(R.string.settings_key_enable_with_low_battery)).setOnPreferenceChangeListener { _, newValue ->
+        findPreference<Preference>(getString(R.string.settings_key_enable_with_low_battery)).setOnPreferenceChangeListener { _, newValue ->
             newValue as Boolean
             lowBatteryAmount.isVisible = newValue
             true
         }
 
         val deviceHasSystemBluelightFilter = android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O
-        val blueFilterSwitch = findPreference(getString(R.string.settings_key_bluelight_filter_enabled))
+        val blueFilterSwitch = findPreference<Preference>(getString(R.string.settings_key_bluelight_filter_enabled))
         blueFilterSwitch.isVisible = deviceHasSystemBluelightFilter
         blueFilterSwitch.setOnPreferenceChangeListener { _, newValue ->
             newValue as Boolean
@@ -65,6 +66,8 @@ class PreferencesFragment : PreferenceFragmentCompat() {
         disableTime.summary = getTimeToString(settings.getDisableTime())
         lowBatteryAmount.summary = settings.getLowBatteryLevel().toString() + "%"
         bluelightFilterTemperature.summary = settings.getBluelightFilterTemperature().toString()
+
+        return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     override fun onPreferenceTreeClick(preference: Preference): Boolean =
@@ -72,26 +75,26 @@ class PreferencesFragment : PreferenceFragmentCompat() {
             getString(R.string.settings_key_enable_time) -> {
                 showTimePickerDialog(settings.getEnableTime()) {
                     settings.setEnableTime(it)
-                    findPreference(getString(R.string.settings_key_enable_time)).summary = getTimeToString(it)
+                    findPreference<Preference>(getString(R.string.settings_key_enable_time)).summary = getTimeToString(it)
                 }
             }
             getString(R.string.settings_key_disable_time) -> {
                 showTimePickerDialog(settings.getDisableTime()) {
                     settings.setDisableTime(it)
-                    findPreference(getString(R.string.settings_key_disable_time)).summary = getTimeToString(it)
+                    findPreference<Preference>(getString(R.string.settings_key_disable_time)).summary = getTimeToString(it)
                 }
             }
             getString(R.string.settings_key_enable_with_low_battery_amount) -> {
                 showNumberPickerDialog(settings.getLowBatteryLevel()) {
                     settings.setLowBatteryLevel(it)
-                    findPreference(getString(R.string.settings_key_enable_with_low_battery_amount)).summary =
+                    findPreference<Preference>(getString(R.string.settings_key_enable_with_low_battery_amount)).summary =
                             it.toString() + "%"
                 }
             }
             getString(R.string.settings_key_bluelight_filter_temperature) -> {
                 showTemperatureSeekBarDialog {
                     settings.setBluelightFilterTemperature(it)
-                    findPreference(getString(R.string.settings_key_bluelight_filter_temperature)).summary =
+                    findPreference<Preference>(getString(R.string.settings_key_bluelight_filter_temperature)).summary =
                             settings.getBluelightFilterTemperature().toString()
                 }
             }

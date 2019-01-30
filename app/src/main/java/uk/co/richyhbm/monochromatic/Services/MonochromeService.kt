@@ -6,7 +6,7 @@ import android.content.Intent
 import android.os.Build
 import android.os.Handler
 import android.os.IBinder
-import android.support.v4.app.NotificationCompat
+import androidx.core.app.NotificationCompat
 import uk.co.richyhbm.monochromatic.Activities.MainActivity
 import uk.co.richyhbm.monochromatic.R
 import uk.co.richyhbm.monochromatic.Receivers.BatteryReceiver
