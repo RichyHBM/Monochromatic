@@ -7,6 +7,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SwitchCompat
 import android.view.MenuItem
+import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.main_activity.*
 import kotlinx.android.synthetic.main.main_fragment.*
 import uk.co.richyhbm.monochromatic.Fragments.AboutFragment
@@ -55,9 +56,19 @@ class MainActivity : AppCompatActivity() {
                 MonochromeService.stopService(this)
             }
 
-            power_toggle.setOnClickListener {
+            enable_toggle.backgroundTintList = ContextCompat.getColorStateList(this,
+                if(settings.isEnabled()) android.R.color.darker_gray else android.R.color.holo_orange_dark
+            )
+            enable_toggle.setImageResource(if(settings.isEnabled()) R.drawable.ic_close_black_24dp else android.R.drawable.ic_lock_power_off)
+
+            enable_toggle.setOnClickListener {
                 val b = !settings.isEnabled()
                 settings.setEnabled(b)
+
+                enable_toggle.backgroundTintList = ContextCompat.getColorStateList(this,
+                    if(settings.isEnabled()) android.R.color.darker_gray else android.R.color.holo_orange_dark
+                )
+                enable_toggle.setImageResource(if(settings.isEnabled()) R.drawable.ic_close_black_24dp else android.R.drawable.ic_lock_power_off)
 
                 if (settings.isEnabled()) {
                     MonochromeService.startService(this)

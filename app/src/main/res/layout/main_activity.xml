@@ -24,7 +24,7 @@
             app:fabAlignmentMode="center"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/power_toggle"
+            android:id="@+id/enable_toggle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_anchor="@id/main_bottom_bar"
