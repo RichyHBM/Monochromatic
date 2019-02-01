@@ -1,3 +1,4 @@
+<b>Version 0.7.0</b>:
 - Updated to AndroidX
 - Now using Material Components
 - Updated to newer look
