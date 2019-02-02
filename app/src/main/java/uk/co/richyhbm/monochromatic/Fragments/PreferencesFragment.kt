@@ -32,8 +32,10 @@ class PreferencesFragment : PreferenceFragmentCompat() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val enableTime = findPreference<Preference>(getString(R.string.settings_key_enable_time))
         val disableTime = findPreference<Preference>(getString(R.string.settings_key_disable_time))
-        val lowBatteryAmount = findPreference<Preference>(getString(R.string.settings_key_enable_with_low_battery_amount))
-        val bluelightFilterTemperature = findPreference<Preference>(getString(R.string.settings_key_bluelight_filter_temperature))
+        val lowBatteryAmount =
+            findPreference<Preference>(getString(R.string.settings_key_enable_with_low_battery_amount))
+        val bluelightFilterTemperature =
+            findPreference<Preference>(getString(R.string.settings_key_bluelight_filter_temperature))
 
         findPreference<Preference>(getString(R.string.settings_key_enable_with_time)).setOnPreferenceChangeListener { _, newValue ->
             newValue as Boolean
@@ -75,13 +77,15 @@ class PreferencesFragment : PreferenceFragmentCompat() {
             getString(R.string.settings_key_enable_time) -> {
                 showTimePickerDialog(settings.getEnableTime()) {
                     settings.setEnableTime(it)
-                    findPreference<Preference>(getString(R.string.settings_key_enable_time)).summary = getTimeToString(it)
+                    findPreference<Preference>(getString(R.string.settings_key_enable_time)).summary =
+                            getTimeToString(it)
                 }
             }
             getString(R.string.settings_key_disable_time) -> {
                 showTimePickerDialog(settings.getDisableTime()) {
                     settings.setDisableTime(it)
-                    findPreference<Preference>(getString(R.string.settings_key_disable_time)).summary = getTimeToString(it)
+                    findPreference<Preference>(getString(R.string.settings_key_disable_time)).summary =
+                            getTimeToString(it)
                 }
             }
             getString(R.string.settings_key_enable_with_low_battery_amount) -> {

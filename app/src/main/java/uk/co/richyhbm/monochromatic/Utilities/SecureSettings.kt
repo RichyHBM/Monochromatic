@@ -20,9 +20,17 @@ object SecureSettings {
     fun toggleMonochrome(enabled: Boolean, contentResolver: ContentResolver) {
         Settings.Secure.putInt(contentResolver, Constants.secureSetting_displayDaltonizerEnabled, enabled.int)
         if (enabled) {
-            Settings.Secure.putInt(contentResolver, Constants.secureSetting_displayDaltonizer, Constants.secureSettingValue_daltonizerSimulateMonochrome)
+            Settings.Secure.putInt(
+                contentResolver,
+                Constants.secureSetting_displayDaltonizer,
+                Constants.secureSettingValue_daltonizerSimulateMonochrome
+            )
         } else {
-            Settings.Secure.putInt(contentResolver, Constants.secureSetting_displayDaltonizer, Constants.secureSettingValue_daltonizerDisabled)
+            Settings.Secure.putInt(
+                contentResolver,
+                Constants.secureSetting_displayDaltonizer,
+                Constants.secureSettingValue_daltonizerDisabled
+            )
         }
     }
 
@@ -36,11 +44,19 @@ object SecureSettings {
 
     fun resetMonochrome(contentResolver: ContentResolver) {
         Settings.Secure.putInt(contentResolver, Constants.secureSetting_displayDaltonizerEnabled, false.int)
-        Settings.Secure.putInt(contentResolver, Constants.secureSetting_displayDaltonizer, Constants.secureSettingValue_daltonizerDisabled)
+        Settings.Secure.putInt(
+            contentResolver,
+            Constants.secureSetting_displayDaltonizer,
+            Constants.secureSettingValue_daltonizerDisabled
+        )
     }
 
     fun isMonochromeEnabled(contentResolver: ContentResolver): Boolean {
-        return Settings.Secure.getInt(contentResolver, Constants.secureSetting_displayDaltonizerEnabled, false.int) == true.int &&
+        return Settings.Secure.getInt(
+            contentResolver,
+            Constants.secureSetting_displayDaltonizerEnabled,
+            false.int
+        ) == true.int &&
                 Settings.Secure.getInt(
                     contentResolver,
                     Constants.secureSetting_displayDaltonizer,
@@ -53,14 +69,22 @@ object SecureSettings {
     }
 
     fun isBluelightFilterEnabled(contentResolver: ContentResolver) =
-        Settings.Secure.getInt(contentResolver, Constants.secureSetting_displayBluelightFilterEnabled, false.int) == true.int
+        Settings.Secure.getInt(
+            contentResolver,
+            Constants.secureSetting_displayBluelightFilterEnabled,
+            false.int
+        ) == true.int
 
     fun setBlueFilterTemperature(temperature: Int, contentResolver: ContentResolver) {
         Settings.Secure.putInt(contentResolver, Constants.secureSetting_displayBluelightFilterTemperature, temperature)
     }
 
     fun resetBlueFilterTemperature(contentResolver: ContentResolver) {
-        Settings.Secure.putInt(contentResolver, Constants.secureSetting_displayBluelightFilterTemperature, Constants.defaultBluelightFilterTemperature)
+        Settings.Secure.putInt(
+            contentResolver,
+            Constants.secureSetting_displayBluelightFilterTemperature,
+            Constants.defaultBluelightFilterTemperature
+        )
     }
 
     fun toggleMonochromeAndBluelightFilter(enabled: Boolean, contentResolver: ContentResolver) {

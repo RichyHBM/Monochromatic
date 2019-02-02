@@ -103,12 +103,13 @@ class Settings(val context: Context) {
         setInt(R.string.settings_key_bluelight_filter_temperature, amount)
     }
 
-    fun getBluelightFilterTemperature(): Int = getIntValue(R.string.settings_key_bluelight_filter_temperature, Constants.defaultBluelightFilterTemperature)
+    fun getBluelightFilterTemperature(): Int =
+        getIntValue(R.string.settings_key_bluelight_filter_temperature, Constants.defaultBluelightFilterTemperature)
 
     fun isAllowed(): Boolean {
         val allowed = isAlwaysOn() || isTimeAllowed() || isBatteryAllowed()
 
-        if(!allowed)
+        if (!allowed)
             setBoolean(R.string.settings_key_disable_session, false)
 
         return allowed && !isQuickDisabled()

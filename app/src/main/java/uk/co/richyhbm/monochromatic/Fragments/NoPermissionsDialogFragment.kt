@@ -23,7 +23,7 @@ class NoPermissionsDialogFragment : androidx.fragment.app.DialogFragment() {
         builder.setMessage(context!!.getString(R.string.grant_permission_adb, adbCommand))
             .setNeutralButton(R.string.share_command, shareAdbCommand())
             .setPositiveButton(R.string.wiki) { _, _ ->
-                startActivity( Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/RichyHBM/Monochromatic/wiki")))
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/RichyHBM/Monochromatic/wiki")))
             }
 
         return builder.create()

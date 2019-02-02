@@ -4,12 +4,10 @@ import android.app.AlertDialog
 import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.SwitchCompat
 import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.main_activity.*
-import kotlinx.android.synthetic.main.main_fragment.*
 import uk.co.richyhbm.monochromatic.Fragments.AboutFragment
 import uk.co.richyhbm.monochromatic.Fragments.MainFragment
 import uk.co.richyhbm.monochromatic.Fragments.NoPermissionsDialogFragment
@@ -25,9 +23,11 @@ class MainActivity : AppCompatActivity() {
     val settings by lazy { Settings(this) }
 
     private val preferencesChangeListener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
-        when(key) {
-            getString(R.string.settings_key_disable_screen) -> {}
-            getString(R.string.settings_key_disable_session) -> {}
+        when (key) {
+            getString(R.string.settings_key_disable_screen) -> {
+            }
+            getString(R.string.settings_key_disable_session) -> {
+            }
             else -> {
                 if (settings.isEnabled()) {
                     MonochromeService.startService(this)
@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.main_activity)
         setSupportActionBar(main_bottom_bar)
 
-        if(!Permissions.hasSecureSettingsPermission(this)) {
+        if (!Permissions.hasSecureSettingsPermission(this)) {
             NoPermissionsDialogFragment().show(supportFragmentManager, "NoPermissionsDialog")
             settings.setEnabled(false)
         } else {
@@ -56,24 +56,27 @@ class MainActivity : AppCompatActivity() {
                 MonochromeService.stopService(this)
             }
 
-            enable_toggle.backgroundTintList = ContextCompat.getColorStateList(this,
-                if(settings.isEnabled()) android.R.color.darker_gray else android.R.color.holo_orange_dark
+            enable_toggle.backgroundTintList = ContextCompat.getColorStateList(
+                this,
+                if (settings.isEnabled()) android.R.color.darker_gray else android.R.color.holo_orange_dark
             )
-            enable_toggle.setImageResource(if(settings.isEnabled()) R.drawable.ic_close_black_24dp else android.R.drawable.ic_lock_power_off)
+            enable_toggle.setImageResource(if (settings.isEnabled()) R.drawable.ic_close_black_24dp else android.R.drawable.ic_lock_power_off)
 
             enable_toggle.setOnClickListener {
                 val b = !settings.isEnabled()
                 settings.setEnabled(b)
 
-                enable_toggle.backgroundTintList = ContextCompat.getColorStateList(this,
-                    if(settings.isEnabled()) android.R.color.darker_gray else android.R.color.holo_orange_dark
+                enable_toggle.backgroundTintList = ContextCompat.getColorStateList(
+                    this,
+                    if (settings.isEnabled()) android.R.color.darker_gray else android.R.color.holo_orange_dark
                 )
-                enable_toggle.setImageResource(if(settings.isEnabled()) R.drawable.ic_close_black_24dp else android.R.drawable.ic_lock_power_off)
+                enable_toggle.setImageResource(if (settings.isEnabled()) R.drawable.ic_close_black_24dp else android.R.drawable.ic_lock_power_off)
 
                 if (settings.isEnabled()) {
                     MonochromeService.startService(this)
-                    if(!settings.seenNotificationDialog() &&
-                        Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    if (!settings.seenNotificationDialog() &&
+                        Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
+                    ) {
                         AlertDialog.Builder(this)
                             .setMessage(getString(R.string.notification_dismiss_notice))
                             .setPositiveButton(android.R.string.ok) { _, _ ->
@@ -82,8 +85,7 @@ class MainActivity : AppCompatActivity() {
                             .create()
                             .show()
                     }
-                }
-                else MonochromeService.stopService(this)
+                } else MonochromeService.stopService(this)
             }
         }
 
@@ -134,6 +136,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun androidx.fragment.app.FragmentManager.lastOnStackIsFragmentOf(fragmentClassName: String) : Boolean = this.backStackEntryCount > 0
-            && this.getBackStackEntryAt(this.backStackEntryCount - 1).name == fragmentClassName
+    private fun androidx.fragment.app.FragmentManager.lastOnStackIsFragmentOf(fragmentClassName: String): Boolean =
+        this.backStackEntryCount > 0
+                && this.getBackStackEntryAt(this.backStackEntryCount - 1).name == fragmentClassName
 }

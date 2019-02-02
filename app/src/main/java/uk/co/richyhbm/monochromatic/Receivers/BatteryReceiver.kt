@@ -10,7 +10,6 @@ import uk.co.richyhbm.monochromatic.Utilities.SecureSettings
 import uk.co.richyhbm.monochromatic.Utilities.Settings
 
 
-
 class BatteryReceiver : BroadcastReceiver() {
     fun registerReceiver(context: Context) {
         val filter = IntentFilter()
@@ -25,10 +24,10 @@ class BatteryReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         val settings = Settings(context)
 
-        if(settings.shouldEnableAtLowBattery() && Permissions.hasSecureSettingsPermission(context)) {
+        if (settings.shouldEnableAtLowBattery() && Permissions.hasSecureSettingsPermission(context)) {
             val level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 0)
 
-            if(level <= settings.getLowBatteryLevel()) {
+            if (level <= settings.getLowBatteryLevel()) {
                 SecureSettings.toggleFilters(true, context.contentResolver, settings)
             } else {
                 SecureSettings.toggleFilters(settings.isAllowed(), context.contentResolver, settings)

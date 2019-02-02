@@ -77,7 +77,7 @@ class MonochromeService : Service() {
         handlerTask = Runnable {
             val settings = Settings(this)
             if (settings.isEnabled()) {
-                if(filterBluelight) {
+                if (filterBluelight) {
                     SecureSettings.toggleMonochromeAndBluelightFilter(settings.isAllowed(), contentResolver)
                 } else {
                     SecureSettings.toggleFilters(settings.isAllowed(), contentResolver, settings)

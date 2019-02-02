@@ -12,7 +12,6 @@ import uk.co.richyhbm.monochromatic.Receivers.DisableMonochromeForSessionReceive
 import uk.co.richyhbm.monochromatic.Utilities.Permissions
 
 
-
 class QuickTilePreferencesActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -32,7 +32,7 @@ class ScreenChangeReceiver : BroadcastReceiver() {
     private fun screenOn(context: Context) {
         val settings = Settings(context)
 
-        if(settings.isEnabled()) {
+        if (settings.isEnabled()) {
             SecureSettings.toggleFilters(settings.isAllowed(), context.contentResolver, settings)
         }
     }
@@ -40,7 +40,7 @@ class ScreenChangeReceiver : BroadcastReceiver() {
     private fun screenOff(context: Context) {
         val settings = Settings(context)
 
-        if(settings.isEnabled()) {
+        if (settings.isEnabled()) {
             SecureSettings.toggleFilters(settings.isAllowed(), context.contentResolver, settings)
         }
     }

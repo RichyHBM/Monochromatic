@@ -13,7 +13,7 @@ import uk.co.richyhbm.monochromatic.Utilities.Settings
 
 @RequiresApi(api = Build.VERSION_CODES.N)
 class QuickToggleTile : TileService() {
-    private val settings by lazy { Settings(applicationContext)}
+    private val settings by lazy { Settings(applicationContext) }
 
     override fun onTileAdded() {
         super.onTileAdded()
@@ -41,7 +41,7 @@ class QuickToggleTile : TileService() {
         if (Permissions.hasSecureSettingsPermission(applicationContext)) {
 
             settings.setEnabled(!settings.isEnabled())
-            if(settings.isEnabled()) MonochromeService.startService(applicationContext)
+            if (settings.isEnabled()) MonochromeService.startService(applicationContext)
             else MonochromeService.stopService(applicationContext)
         } else {
             Toast.makeText(applicationContext, R.string.permission_missing, Toast.LENGTH_SHORT).show()
@@ -51,8 +51,8 @@ class QuickToggleTile : TileService() {
         qsTile.updateTile()
     }
 
-    private fun getTileState() : Int = if(Permissions.hasSecureSettingsPermission(applicationContext)) {
-        if(settings.isEnabled()) Tile.STATE_ACTIVE else Tile.STATE_INACTIVE
+    private fun getTileState(): Int = if (Permissions.hasSecureSettingsPermission(applicationContext)) {
+        if (settings.isEnabled()) Tile.STATE_ACTIVE else Tile.STATE_INACTIVE
     } else Tile.STATE_UNAVAILABLE
 
 }

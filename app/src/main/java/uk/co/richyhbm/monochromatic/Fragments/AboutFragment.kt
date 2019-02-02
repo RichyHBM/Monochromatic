@@ -12,6 +12,7 @@ import uk.co.richyhbm.monochromatic.R
 
 class AboutFragment : BaseFragment() {
     private class LibraryInfo(val name: String, val creator: String, val license: String)
+
     private val libraries = listOf(
         LibraryInfo("Kotlin", "JetBrains", "Apache 2.0"),
         LibraryInfo("Material Components", "Google", "Apache 2.0"),

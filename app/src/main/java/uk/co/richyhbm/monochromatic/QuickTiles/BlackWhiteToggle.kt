@@ -47,8 +47,8 @@ class BlackWhiteToggle : TileService() {
         qsTile.updateTile()
     }
 
-    private fun getTileState() : Int = if(Permissions.hasSecureSettingsPermission(applicationContext)) {
-        if(SecureSettings.isMonochromeEnabled(applicationContext.contentResolver)) Tile.STATE_INACTIVE else Tile.STATE_ACTIVE
+    private fun getTileState(): Int = if (Permissions.hasSecureSettingsPermission(applicationContext)) {
+        if (SecureSettings.isMonochromeEnabled(applicationContext.contentResolver)) Tile.STATE_INACTIVE else Tile.STATE_ACTIVE
     } else Tile.STATE_UNAVAILABLE
 
 }

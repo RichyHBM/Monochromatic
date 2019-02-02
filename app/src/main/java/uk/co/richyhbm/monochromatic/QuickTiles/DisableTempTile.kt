@@ -14,7 +14,7 @@ import uk.co.richyhbm.monochromatic.Utilities.Settings
 
 @RequiresApi(api = Build.VERSION_CODES.N)
 class DisableTempTile : TileService() {
-    private val settings by lazy { Settings(applicationContext)}
+    private val settings by lazy { Settings(applicationContext) }
 
     override fun onTileAdded() {
         super.onTileAdded()
@@ -42,7 +42,7 @@ class DisableTempTile : TileService() {
 
         if (Permissions.hasSecureSettingsPermission(applicationContext)) {
 
-            if(settings.isEnabled() && settings.isQuickDisabled()) {
+            if (settings.isEnabled() && settings.isQuickDisabled()) {
                 settings.resetScreenDisabled()
                 settings.resetSessionDisabled()
                 SecureSettings.toggleFilters(settings.isAllowed(), applicationContext.contentResolver, settings)
@@ -57,8 +57,8 @@ class DisableTempTile : TileService() {
         qsTile.updateTile()
     }
 
-    private fun getTileState() : Int = if(Permissions.hasSecureSettingsPermission(applicationContext)) {
-        if(settings.isEnabled() && settings.isAllowed()) Tile.STATE_ACTIVE else Tile.STATE_INACTIVE
+    private fun getTileState(): Int = if (Permissions.hasSecureSettingsPermission(applicationContext)) {
+        if (settings.isEnabled() && settings.isAllowed()) Tile.STATE_ACTIVE else Tile.STATE_INACTIVE
     } else Tile.STATE_UNAVAILABLE
 
 }
