@@ -4,16 +4,11 @@ import android.app.AlertDialog
 import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.SwitchCompat
 import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.main_activity.*
-import kotlinx.android.synthetic.main.main_fragment.*
-import uk.co.richyhbm.monochromatic.Fragments.AboutFragment
-import uk.co.richyhbm.monochromatic.Fragments.MainFragment
-import uk.co.richyhbm.monochromatic.Fragments.NoPermissionsDialogFragment
-import uk.co.richyhbm.monochromatic.Fragments.PreferencesFragment
+import uk.co.richyhbm.monochromatic.Fragments.*
 import uk.co.richyhbm.monochromatic.R
 import uk.co.richyhbm.monochromatic.Services.MonochromeService
 import uk.co.richyhbm.monochromatic.Utilities.Permissions
@@ -99,6 +94,15 @@ class MainActivity : AppCompatActivity() {
             SecureSettings.resetAllFilters(contentResolver, settings)
             settings.setEnabled(false)
             MonochromeService.stopService(this)
+            true
+        }
+        R.id.main_menu_whitelist -> {
+            if (!supportFragmentManager.lastOnStackIsFragmentOf(WhitelistFragment::class.java.name)) {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.container, WhitelistFragment())
+                    .addToBackStack(WhitelistFragment::class.java.name)
+                    .commit()
+            }
             true
         }
         R.id.main_menu_settings -> {

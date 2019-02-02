@@ -22,4 +22,8 @@
     <string name="share_command">Share Command</string>
     <string name="toggle_greyscale">Toggle Greyscale</string>
     <string name="toggling_please_wait">Toggling, please wait!</string>
+    <string name="force_color">Force color</string>
+    <string name="whitelist">Whitelist</string>
+    <string name="settings">Settings</string>
+    <string name="about">About</string>
 </resources>
