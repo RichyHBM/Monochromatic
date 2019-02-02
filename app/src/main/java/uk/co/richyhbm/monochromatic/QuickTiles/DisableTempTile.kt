@@ -1,12 +1,14 @@
 package uk.co.richyhbm.monochromatic.QuickTiles
 
-import android.content.Intent
 import android.os.Build
 import android.service.quicksettings.Tile
 import android.service.quicksettings.TileService
+import android.widget.Toast
 import androidx.annotation.RequiresApi
+import uk.co.richyhbm.monochromatic.R
 import uk.co.richyhbm.monochromatic.Receivers.DisableMonochromeForScreenReceiver
 import uk.co.richyhbm.monochromatic.Utilities.Permissions
+import uk.co.richyhbm.monochromatic.Utilities.SecureSettings
 import uk.co.richyhbm.monochromatic.Utilities.Settings
 
 
@@ -36,8 +38,19 @@ class DisableTempTile : TileService() {
     override fun onClick() {
         super.onClick()
 
+        Toast.makeText(applicationContext, R.string.toggling_please_wait, Toast.LENGTH_SHORT).show()
+
         if (Permissions.hasSecureSettingsPermission(applicationContext)) {
-            sendBroadcast(Intent(applicationContext, DisableMonochromeForScreenReceiver::class.java))
+
+            if(settings.isEnabled() && settings.isQuickDisabled()) {
+                settings.resetScreenDisabled()
+                settings.resetSessionDisabled()
+                SecureSettings.toggleFilters(settings.isAllowed(), applicationContext.contentResolver, settings)
+            } else {
+                DisableMonochromeForScreenReceiver.disableForScreen(applicationContext)
+            }
+        } else {
+            Toast.makeText(applicationContext, R.string.permission_missing, Toast.LENGTH_SHORT).show()
         }
 
         qsTile.state = getTileState()

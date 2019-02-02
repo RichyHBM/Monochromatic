@@ -25,7 +25,7 @@ android {
             applicationIdSuffix = ".dev"
             versionNameSuffix = "-dev"
             testCoverageEnabled = true
-            resValue "string", "app_name", "Monochromatic debug"
+            resValue "string", "app_name", "Devochromatic"
         }
     }
 }

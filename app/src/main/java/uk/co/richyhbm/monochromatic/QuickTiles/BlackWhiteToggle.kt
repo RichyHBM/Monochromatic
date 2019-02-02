@@ -6,18 +6,16 @@ import android.service.quicksettings.TileService
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import uk.co.richyhbm.monochromatic.R
-import uk.co.richyhbm.monochromatic.Services.MonochromeService
 import uk.co.richyhbm.monochromatic.Utilities.Permissions
+import uk.co.richyhbm.monochromatic.Utilities.SecureSettings
 import uk.co.richyhbm.monochromatic.Utilities.Settings
 
-
 @RequiresApi(api = Build.VERSION_CODES.N)
-class QuickToggleTile : TileService() {
-    private val settings by lazy { Settings(applicationContext)}
+class BlackWhiteToggle : TileService() {
+    private val settings by lazy { Settings(applicationContext) }
 
     override fun onTileAdded() {
         super.onTileAdded()
-
         qsTile.state = getTileState()
         qsTile.updateTile()
     }
@@ -39,10 +37,8 @@ class QuickToggleTile : TileService() {
         Toast.makeText(applicationContext, R.string.toggling_please_wait, Toast.LENGTH_SHORT).show()
 
         if (Permissions.hasSecureSettingsPermission(applicationContext)) {
-
-            settings.setEnabled(!settings.isEnabled())
-            if(settings.isEnabled()) MonochromeService.startService(applicationContext)
-            else MonochromeService.stopService(applicationContext)
+            val cr = applicationContext.contentResolver
+            SecureSettings.toggleMonochrome(!SecureSettings.isMonochromeEnabled(cr), cr)
         } else {
             Toast.makeText(applicationContext, R.string.permission_missing, Toast.LENGTH_SHORT).show()
         }
@@ -52,7 +48,7 @@ class QuickToggleTile : TileService() {
     }
 
     private fun getTileState() : Int = if(Permissions.hasSecureSettingsPermission(applicationContext)) {
-        if(settings.isEnabled()) Tile.STATE_ACTIVE else Tile.STATE_INACTIVE
+        if(SecureSettings.isMonochromeEnabled(applicationContext.contentResolver)) Tile.STATE_INACTIVE else Tile.STATE_ACTIVE
     } else Tile.STATE_UNAVAILABLE
 
 }

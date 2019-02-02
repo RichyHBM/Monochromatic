@@ -121,7 +121,7 @@ class Settings(val context: Context) {
     fun seenNotificationDialog() =
         getBoolean(R.string.settings_key_show_notification_dialog, false)
 
-    private fun isQuickDisabled() = isScreenDisabled() || isSessionDisabled()
+    fun isQuickDisabled() = isScreenDisabled() || isSessionDisabled()
 
     private fun isScreenDisabled() = getBoolean(R.string.settings_key_disable_screen, false)
 

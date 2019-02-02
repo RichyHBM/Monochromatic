@@ -17,7 +17,7 @@ object SecureSettings {
         }
     }
 
-    private fun toggleMonochrome(enabled: Boolean, contentResolver: ContentResolver) {
+    fun toggleMonochrome(enabled: Boolean, contentResolver: ContentResolver) {
         Settings.Secure.putInt(contentResolver, Constants.secureSetting_displayDaltonizerEnabled, enabled.int)
         if (enabled) {
             Settings.Secure.putInt(contentResolver, Constants.secureSetting_displayDaltonizer, Constants.secureSettingValue_daltonizerSimulateMonochrome)

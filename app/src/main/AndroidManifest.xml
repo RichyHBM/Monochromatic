@@ -48,6 +48,14 @@
                 <action android:name="android.service.quicksettings.action.QS_TILE" />
             </intent-filter>
         </service>
+        <service android:name=".QuickTiles.BlackWhiteToggle"
+                 android:icon="@drawable/ic_invert_colors_black"
+                 android:label="@string/toggle_greyscale"
+                 android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
 
         <receiver android:name=".Receivers.DisableMonochromeForScreenReceiver"/>
         <receiver android:name=".Receivers.DisableMonochromeForSessionReceiver"/>
