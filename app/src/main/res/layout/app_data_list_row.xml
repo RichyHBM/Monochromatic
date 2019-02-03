@@ -8,13 +8,13 @@
               android:gravity="center_vertical">
 
     <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
             app:srcCompat="@android:drawable/sym_def_app_icon"
             android:id="@+id/app_list_row_imageView"
             android:layout_weight="0"
             android:adjustViewBounds="true"
-            android:padding="8dp" android:maxHeight="64dp" android:maxWidth="64dp" android:scaleType="centerInside"/>
+            android:padding="8dp" android:scaleType="fitCenter"/>
 
     <TextView
             tools:text="TextView"
