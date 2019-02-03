@@ -24,6 +24,12 @@ class Settings(val context: Context) {
         }
     }
 
+    private fun getStringSet(keyId: Int, defaultValue: MutableSet<String>): MutableSet<String> {
+        val set = settings.getStringSet(context.getString(keyId), defaultValue)
+        return set ?: defaultValue
+    }
+
+
     private fun setBoolean(keyId: Int, value: Boolean) {
         settings.edit()
             .putBoolean(context.getString(keyId), value)
@@ -33,6 +39,12 @@ class Settings(val context: Context) {
     private fun setInt(keyId: Int, value: Int) {
         settings.edit()
             .putInt(context.getString(keyId), value)
+            .apply()
+    }
+
+    private fun setStringSet(keyId: Int, value: Set<String>) {
+        settings.edit()
+            .putStringSet(context.getString(keyId), value)
             .apply()
     }
 
@@ -132,4 +144,27 @@ class Settings(val context: Context) {
 
     fun sessionDisabled() = setBoolean(R.string.settings_key_disable_session, true)
     fun resetSessionDisabled() = setBoolean(R.string.settings_key_disable_session, false)
+
+    fun isWhiteListed(packageName: String): Boolean {
+        val set = getStringSet(R.string.settings_key_whitelisted_apps, mutableSetOf())
+        return set.contains(packageName)
+    }
+
+    fun addAppWhiteList(packageName: String) {
+        val set = getStringSet(R.string.settings_key_whitelisted_apps, mutableSetOf())
+        set.add(packageName)
+        setStringSet(R.string.settings_key_whitelisted_apps, set)
+    }
+
+    fun removeAppWhiteList(packageName: String) {
+        val set = getStringSet(R.string.settings_key_whitelisted_apps, mutableSetOf())
+        set.remove(packageName)
+        setStringSet(R.string.settings_key_whitelisted_apps, set)
+    }
+
+    fun clearAppWhiteListUninstalled(installedApps: Set<String>) {
+        val set = getStringSet(R.string.settings_key_whitelisted_apps, mutableSetOf())
+        set.removeAll { !installedApps.contains(it) }
+        setStringSet(R.string.settings_key_whitelisted_apps, set)
+    }
 }
