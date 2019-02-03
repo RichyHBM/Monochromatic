@@ -16,7 +16,7 @@ class AppAsyncTaskLoader(context: Context, val showSystem: Boolean): AsyncTaskLo
         return appInfoList
             .filter { appData -> showSystem || (!showSystem && appData.flags and ApplicationInfo.FLAG_SYSTEM == 0) }
             .map { appInfoToAppData(packageManager, it) }
-            .sortedBy { appData -> appData.appName }
+            .sortedBy { appData -> appData.appName.toLowerCase() }
     }
 
     private fun appInfoToAppData(packageManager: PackageManager, appInfo: ApplicationInfo): AppData {
