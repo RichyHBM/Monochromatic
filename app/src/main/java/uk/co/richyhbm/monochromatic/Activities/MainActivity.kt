@@ -1,6 +1,7 @@
 package uk.co.richyhbm.monochromatic.Activities
 
 import android.app.AlertDialog
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
@@ -97,12 +98,7 @@ class MainActivity : AppCompatActivity() {
             true
         }
         R.id.main_menu_whitelist -> {
-            if (!supportFragmentManager.lastOnStackIsFragmentOf(WhitelistFragment::class.java.name)) {
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.container, WhitelistFragment())
-                    .addToBackStack(WhitelistFragment::class.java.name)
-                    .commit()
-            }
+            gotoWhitelistFragment()
             true
         }
         R.id.main_menu_settings -> {
@@ -135,6 +131,29 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.popBackStack()
         } else {
             super.onBackPressed()
+        }
+    }
+
+    private fun gotoWhitelistFragment() {
+
+        if(Permissions.hasUsageStatsPermission(this)) {
+            if (!supportFragmentManager.lastOnStackIsFragmentOf(WhitelistFragment::class.java.name)) {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.container, WhitelistFragment())
+                    .addToBackStack(WhitelistFragment::class.java.name)
+                    .commit()
+            }
+        } else {
+            val builder = AlertDialog.Builder(this)
+            builder.setTitle(R.string.permission_missing)
+
+            builder.setMessage(this.getString(R.string.usage_permission_missing))
+                .setNeutralButton(android.R.string.cancel) { _, _ -> }
+                .setPositiveButton(android.R.string.ok) { _, _ ->
+                    startActivity(Intent(android.provider.Settings.ACTION_USAGE_ACCESS_SETTINGS))
+                }
+                .create()
+                .show()
         }
     }
 
