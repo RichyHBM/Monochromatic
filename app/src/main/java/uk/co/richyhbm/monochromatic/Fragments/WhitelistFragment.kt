@@ -1,9 +1,7 @@
 package uk.co.richyhbm.monochromatic.Fragments
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.loader.app.LoaderManager
 import androidx.loader.content.Loader
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,9 +17,10 @@ import uk.co.richyhbm.monochromatic.Utilities.Settings
 class WhitelistFragment: BaseFragment(), LoaderManager.LoaderCallbacks<List<AppData>> {
 
     val LOADER_ID = 1234
+    var showSystem = false
 
     override fun onCreateLoader(id: Int, args: Bundle?): Loader<List<AppData>> {
-        return AppAsyncTaskLoader(requireContext())
+        return AppAsyncTaskLoader(requireContext(), showSystem)
     }
 
     override fun onLoaderReset(loader: Loader<List<AppData>>) {
@@ -58,7 +57,23 @@ class WhitelistFragment: BaseFragment(), LoaderManager.LoaderCallbacks<List<AppD
 
     override fun onResume() {
         super.onResume()
-        setHasOptionsMenu(false)
+        setHasOptionsMenu(true)
         showBackButton(true)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.whitelist_menu, menu)
+        menu.findItem(R.id.whitelist_menu_show_system).isChecked = showSystem
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.whitelist_menu_show_system -> {
+                item.isChecked = !item.isChecked
+                showSystem = item.isChecked
+                LoaderManager.getInstance(this).restartLoader(LOADER_ID, null, this)
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

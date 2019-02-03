@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/whitelist_menu_show_system" android:title="@string/show_system" android:checkable="true"/>
+</menu>

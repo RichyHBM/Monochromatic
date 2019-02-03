@@ -135,7 +135,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun gotoWhitelistFragment() {
-
         if(Permissions.hasUsageStatsPermission(this)) {
             if (!supportFragmentManager.lastOnStackIsFragmentOf(WhitelistFragment::class.java.name)) {
                 supportFragmentManager.beginTransaction()

@@ -8,12 +8,15 @@ import uk.co.richyhbm.monochromatic.Data.AppData
 
 
 
-class AppAsyncTaskLoader(context: Context): AsyncTaskLoader<List<AppData>>(context){
+class AppAsyncTaskLoader(context: Context, val showSystem: Boolean): AsyncTaskLoader<List<AppData>>(context){
     override fun loadInBackground(): List<AppData> {
         val packageManager = context.packageManager ?: return listOf()
         val appInfoList = packageManager.getInstalledApplications(0) ?: return listOf()
-        val apps = appInfoList.map {appInfoToAppData(packageManager, it)}
-        return apps.sortedBy { appData -> appData.appName }
+
+        return appInfoList
+            .filter { appData -> showSystem || (!showSystem && appData.flags and ApplicationInfo.FLAG_SYSTEM == 0) }
+            .map { appInfoToAppData(packageManager, it) }
+            .sortedBy { appData -> appData.appName }
     }
 
     private fun appInfoToAppData(packageManager: PackageManager, appInfo: ApplicationInfo): AppData {

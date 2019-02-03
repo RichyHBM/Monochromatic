@@ -123,7 +123,7 @@ class Settings(val context: Context) {
         if(!allowed)
             setBoolean(R.string.settings_key_disable_session, false)
 
-        return allowed && !isQuickDisabled()
+        return allowed && !isQuickDisabled() && !isWhitelistDisabled()
     }
 
     fun setSeenNotificationDialog() {
@@ -145,9 +145,18 @@ class Settings(val context: Context) {
     fun sessionDisabled() = setBoolean(R.string.settings_key_disable_session, true)
     fun resetSessionDisabled() = setBoolean(R.string.settings_key_disable_session, false)
 
+    fun isWhitelistDisabled() = getBoolean(R.string.settings_key_disable_whitelist, false)
+    fun disableForScreenWhitelist() = setBoolean(R.string.settings_key_disable_whitelist, true)
+    fun resetScreenWhitelistDisabled() = setBoolean(R.string.settings_key_disable_whitelist, false)
+
     fun isWhiteListed(packageName: String): Boolean {
         val set = getStringSet(R.string.settings_key_whitelisted_apps, mutableSetOf())
         return set.contains(packageName)
+    }
+
+    fun hasWhiteListedApps(): Boolean {
+        val set = getStringSet(R.string.settings_key_whitelisted_apps, mutableSetOf())
+        return !set.isEmpty()
     }
 
     fun addAppWhiteList(packageName: String) {
