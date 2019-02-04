@@ -19,13 +19,12 @@ class QuickTilePreferencesActivity : Activity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val qsTile = intent.getParcelableExtra<ComponentName>(Intent.EXTRA_COMPONENT_NAME)
 
-            Toast.makeText(applicationContext, R.string.toggling_please_wait, Toast.LENGTH_SHORT).show()
-
             if (Permissions.hasSecureSettingsPermission(applicationContext)) {
                 when (qsTile.className) {
-                    DisableTempTile::class.java.name ->
+                    DisableTempTile::class.java.name -> {
+                        Toast.makeText(applicationContext, R.string.toggling_please_wait, Toast.LENGTH_SHORT).show()
                         DisableMonochromeForSessionReceiver.disableForSession(applicationContext)
-
+                    }
                 }
             } else {
                 Toast.makeText(applicationContext, R.string.permission_missing, Toast.LENGTH_SHORT).show()
