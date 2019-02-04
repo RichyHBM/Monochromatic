@@ -34,8 +34,9 @@ class WhitelistFragment : BaseFragment(), LoaderManager.LoaderCallbacks<List<App
         settings.clearAppWhiteListUninstalled(data.map { it.packageName }.toSet())
 
         val sortedFilteredData =
-            data.filter { appData -> showSystem || (!showSystem && appData.flags and ApplicationInfo.FLAG_SYSTEM == 0) }
+            data.filter { appData -> showSystem || (!showSystem && appData.flags and ApplicationInfo.FLAG_SYSTEM == 0) || settings.isWhiteListed(appData.packageName) }
                 .sortedBy { appData -> appData.appName.toLowerCase() }
+                .sortedBy { appData -> !settings.isWhiteListed(appData.packageName) }
 
         (app_list_recycler_view.adapter as AppDataAdapter).swap(sortedFilteredData)
         app_list_recycler_refresh_layout.isRefreshing = false
