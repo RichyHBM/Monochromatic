@@ -16,6 +16,7 @@ import java.util.concurrent.TimeUnit
 
 class ScreenChangeReceiver : BroadcastReceiver() {
     var scheduler: ScheduledExecutorService = Executors.newSingleThreadScheduledExecutor()
+    var foregroundApp = ""
 
     fun registerReceiver(context: Context) {
         val filter = IntentFilter()
@@ -103,10 +104,9 @@ class ScreenChangeReceiver : BroadcastReceiver() {
 
         val usageSettings = context.getSystemService(uss) as UsageStatsManager
         val time = System.currentTimeMillis()
-        val events = usageSettings.queryEvents(time - 1000 * 10, time)
+        val events = usageSettings.queryEvents(time - 1000 * 30, time)
         val event: UsageEvents.Event = UsageEvents.Event()
 
-        var foregroundApp = ""
         while(events.getNextEvent(event)) {
             if(event.eventType == UsageEvents.Event.MOVE_TO_FOREGROUND) {
                 foregroundApp = event.packageName
