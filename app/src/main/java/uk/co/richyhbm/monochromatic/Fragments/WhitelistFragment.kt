@@ -15,7 +15,7 @@ import uk.co.richyhbm.monochromatic.Utilities.AppAsyncTaskLoader
 import uk.co.richyhbm.monochromatic.Utilities.Settings
 
 
-class WhitelistFragment: BaseFragment(), LoaderManager.LoaderCallbacks<List<AppData>> {
+class WhitelistFragment : BaseFragment(), LoaderManager.LoaderCallbacks<List<AppData>> {
 
     val LOADER_ID = 1234
     var showSystem = false
@@ -33,8 +33,9 @@ class WhitelistFragment: BaseFragment(), LoaderManager.LoaderCallbacks<List<AppD
         val settings = Settings(requireContext())
         settings.clearAppWhiteListUninstalled(data.map { it.packageName }.toSet())
 
-        val sortedFilteredData = data.filter { appData -> showSystem || (!showSystem && appData.flags and ApplicationInfo.FLAG_SYSTEM == 0) }
-            .sortedBy { appData -> appData.appName.toLowerCase() }
+        val sortedFilteredData =
+            data.filter { appData -> showSystem || (!showSystem && appData.flags and ApplicationInfo.FLAG_SYSTEM == 0) }
+                .sortedBy { appData -> appData.appName.toLowerCase() }
 
         (app_list_recycler_view.adapter as AppDataAdapter).swap(sortedFilteredData)
         app_list_recycler_refresh_layout.isRefreshing = false
@@ -71,7 +72,7 @@ class WhitelistFragment: BaseFragment(), LoaderManager.LoaderCallbacks<List<AppD
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId) {
+        when (item.itemId) {
             R.id.whitelist_menu_show_system -> {
                 item.isChecked = !item.isChecked
                 showSystem = item.isChecked

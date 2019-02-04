@@ -7,10 +7,10 @@ import uk.co.richyhbm.monochromatic.Data.AppData
 import uk.co.richyhbm.monochromatic.ViewHolders.AppDataViewHolder
 
 
-
 class AppDataAdapter(private val appsList: ArrayList<AppData>) : RecyclerView.Adapter<AppDataViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AppDataViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(uk.co.richyhbm.monochromatic.R.layout.app_data_list_row, parent, false)
+        val view = LayoutInflater.from(parent.context)
+            .inflate(uk.co.richyhbm.monochromatic.R.layout.app_data_list_row, parent, false)
         return AppDataViewHolder(view)
     }
 

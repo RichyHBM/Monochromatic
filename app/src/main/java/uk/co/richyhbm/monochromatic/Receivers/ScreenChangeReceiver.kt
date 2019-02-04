@@ -24,12 +24,12 @@ class ScreenChangeReceiver : BroadcastReceiver() {
         filter.addAction(Intent.ACTION_SCREEN_OFF)
         context.registerReceiver(this, filter)
 
-        if(scheduler.isShutdown) {
+        if (scheduler.isShutdown) {
             scheduler = Executors.newSingleThreadScheduledExecutor()
         }
 
         val settings = Settings(context)
-        if(!scheduler.isShutdown) {
+        if (!scheduler.isShutdown) {
             scheduler.scheduleAtFixedRate({
                 if (!settings.isQuickDisabled()) {
                     if (isForegroundAppWhitelisted(context)) {
@@ -65,11 +65,11 @@ class ScreenChangeReceiver : BroadcastReceiver() {
         if (settings.isEnabled()) {
             SecureSettings.toggleFilters(settings.isAllowed(), context.contentResolver, settings)
             if (settings.hasWhiteListedApps() && Permissions.hasUsageStatsPermission(context)) {
-                if(scheduler.isShutdown) {
+                if (scheduler.isShutdown) {
                     scheduler = Executors.newSingleThreadScheduledExecutor()
                 }
 
-                if(!scheduler.isShutdown) {
+                if (!scheduler.isShutdown) {
                     scheduler.scheduleAtFixedRate({
                         if (!settings.isQuickDisabled()) {
                             if (isForegroundAppWhitelisted(context)) {
@@ -107,8 +107,8 @@ class ScreenChangeReceiver : BroadcastReceiver() {
         val events = usageSettings.queryEvents(time - 1000 * 30, time)
         val event: UsageEvents.Event = UsageEvents.Event()
 
-        while(events.getNextEvent(event)) {
-            if(event.eventType == UsageEvents.Event.MOVE_TO_FOREGROUND) {
+        while (events.getNextEvent(event)) {
+            if (event.eventType == UsageEvents.Event.MOVE_TO_FOREGROUND) {
                 foregroundApp = event.packageName
             }
         }

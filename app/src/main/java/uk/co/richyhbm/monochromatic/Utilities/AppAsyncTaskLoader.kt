@@ -7,8 +7,7 @@ import androidx.loader.content.AsyncTaskLoader
 import uk.co.richyhbm.monochromatic.Data.AppData
 
 
-
-class AppAsyncTaskLoader(context: Context): AsyncTaskLoader<List<AppData>>(context){
+class AppAsyncTaskLoader(context: Context) : AsyncTaskLoader<List<AppData>>(context) {
     override fun loadInBackground(): List<AppData> {
         val packageManager = context.packageManager ?: return listOf()
         val appInfoList = packageManager.getInstalledApplications(0) ?: return listOf()

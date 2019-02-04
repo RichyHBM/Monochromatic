@@ -9,10 +9,6 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.main_activity.*
-import uk.co.richyhbm.monochromatic.Fragments.AboutFragment
-import uk.co.richyhbm.monochromatic.Fragments.MainFragment
-import uk.co.richyhbm.monochromatic.Fragments.NoPermissionsDialogFragment
-import uk.co.richyhbm.monochromatic.Fragments.PreferencesFragment
 import uk.co.richyhbm.monochromatic.Fragments.*
 import uk.co.richyhbm.monochromatic.R
 import uk.co.richyhbm.monochromatic.Services.MonochromeService
@@ -143,7 +139,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun gotoWhitelistFragment() {
-        if(Permissions.hasUsageStatsPermission(this)) {
+        if (Permissions.hasUsageStatsPermission(this)) {
             if (!supportFragmentManager.lastOnStackIsFragmentOf(WhitelistFragment::class.java.name)) {
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.container, WhitelistFragment())
@@ -164,6 +160,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun androidx.fragment.app.FragmentManager.lastOnStackIsFragmentOf(fragmentClassName: String) : Boolean = this.backStackEntryCount > 0
-            && this.getBackStackEntryAt(this.backStackEntryCount - 1).name == fragmentClassName
+    private fun androidx.fragment.app.FragmentManager.lastOnStackIsFragmentOf(fragmentClassName: String): Boolean =
+        this.backStackEntryCount > 0
+                && this.getBackStackEntryAt(this.backStackEntryCount - 1).name == fragmentClassName
 }

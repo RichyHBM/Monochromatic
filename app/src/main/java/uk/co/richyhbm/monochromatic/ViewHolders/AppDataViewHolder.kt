@@ -11,7 +11,7 @@ import uk.co.richyhbm.monochromatic.Services.MonochromeService
 import uk.co.richyhbm.monochromatic.Utilities.SecureSettings
 import uk.co.richyhbm.monochromatic.Utilities.Settings
 
-class AppDataViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+class AppDataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     fun bind(appData: AppData) {
         itemView.findViewById<ImageView>(R.id.app_list_row_imageView).setImageDrawable(appData.icon)
@@ -24,9 +24,9 @@ class AppDataViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
         switch.isChecked = settings.isWhiteListed(appData.packageName)
 
-        switch.setOnCheckedChangeListener{ _, isChecked ->
+        switch.setOnCheckedChangeListener { _, isChecked ->
             val packageName = appData.packageName
-            when(isChecked) {
+            when (isChecked) {
                 true -> settings.addAppWhiteList(packageName)
                 false -> settings.removeAppWhiteList(packageName)
             }
