@@ -1,5 +1,6 @@
 package uk.co.richyhbm.monochromatic.Fragments
 
+import android.content.pm.ApplicationInfo
 import android.os.Bundle
 import android.view.*
 import androidx.loader.app.LoaderManager
@@ -20,7 +21,8 @@ class WhitelistFragment: BaseFragment(), LoaderManager.LoaderCallbacks<List<AppD
     var showSystem = false
 
     override fun onCreateLoader(id: Int, args: Bundle?): Loader<List<AppData>> {
-        return AppAsyncTaskLoader(requireContext(), showSystem)
+        app_list_recycler_refresh_layout.isRefreshing = true
+        return AppAsyncTaskLoader(requireContext())
     }
 
     override fun onLoaderReset(loader: Loader<List<AppData>>) {
@@ -30,7 +32,11 @@ class WhitelistFragment: BaseFragment(), LoaderManager.LoaderCallbacks<List<AppD
     override fun onLoadFinished(loader: Loader<List<AppData>>, data: List<AppData>) {
         val settings = Settings(requireContext())
         settings.clearAppWhiteListUninstalled(data.map { it.packageName }.toSet())
-        (app_list_recycler_view.adapter as AppDataAdapter).swap(data)
+
+        val sortedFilteredData = data.filter { appData -> showSystem || (!showSystem && appData.flags and ApplicationInfo.FLAG_SYSTEM == 0) }
+            .sortedBy { appData -> appData.appName.toLowerCase() }
+
+        (app_list_recycler_view.adapter as AppDataAdapter).swap(sortedFilteredData)
         app_list_recycler_refresh_layout.isRefreshing = false
     }
 
@@ -46,8 +52,6 @@ class WhitelistFragment: BaseFragment(), LoaderManager.LoaderCallbacks<List<AppD
         app_list_recycler_refresh_layout.setOnRefreshListener {
             LoaderManager.getInstance(this).restartLoader(LOADER_ID, null, this)
         }
-
-        app_list_recycler_refresh_layout.isRefreshing = true
 
         app_list_recycler_view.setHasFixedSize(true)
         val layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
