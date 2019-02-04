@@ -7,11 +7,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import uk.co.richyhbm.monochromatic.Data.AppData
 import uk.co.richyhbm.monochromatic.R
-import uk.co.richyhbm.monochromatic.Services.MonochromeService
-import uk.co.richyhbm.monochromatic.Utilities.SecureSettings
 import uk.co.richyhbm.monochromatic.Utilities.Settings
 
-class AppDataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+class AppDataViewHolder(itemView: View, private val onClick: () -> Unit) : RecyclerView.ViewHolder(itemView) {
 
     fun bind(appData: AppData) {
         itemView.findViewById<ImageView>(R.id.app_list_row_imageView).setImageDrawable(appData.icon)
@@ -31,9 +29,7 @@ class AppDataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                 false -> settings.removeAppWhiteList(packageName)
             }
 
-            MonochromeService.stopService(itemView.context)
-            MonochromeService.startService(itemView.context)
-            SecureSettings.toggleFilters(settings.isAllowed(), itemView.context.contentResolver, settings)
+            onClick()
         }
     }
 }
