@@ -1,6 +1,7 @@
 package uk.co.richyhbm.monochromatic.Activities
 
 import android.app.AlertDialog
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
@@ -12,6 +13,7 @@ import uk.co.richyhbm.monochromatic.Fragments.AboutFragment
 import uk.co.richyhbm.monochromatic.Fragments.MainFragment
 import uk.co.richyhbm.monochromatic.Fragments.NoPermissionsDialogFragment
 import uk.co.richyhbm.monochromatic.Fragments.PreferencesFragment
+import uk.co.richyhbm.monochromatic.Fragments.*
 import uk.co.richyhbm.monochromatic.R
 import uk.co.richyhbm.monochromatic.Services.MonochromeService
 import uk.co.richyhbm.monochromatic.Utilities.Permissions
@@ -103,6 +105,10 @@ class MainActivity : AppCompatActivity() {
             MonochromeService.stopService(this)
             true
         }
+        R.id.main_menu_whitelist -> {
+            gotoWhitelistFragment()
+            true
+        }
         R.id.main_menu_settings -> {
             if (!supportFragmentManager.lastOnStackIsFragmentOf(PreferencesFragment::class.java.name)) {
                 supportFragmentManager.beginTransaction()
@@ -136,7 +142,28 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun androidx.fragment.app.FragmentManager.lastOnStackIsFragmentOf(fragmentClassName: String): Boolean =
-        this.backStackEntryCount > 0
-                && this.getBackStackEntryAt(this.backStackEntryCount - 1).name == fragmentClassName
+    private fun gotoWhitelistFragment() {
+        if(Permissions.hasUsageStatsPermission(this)) {
+            if (!supportFragmentManager.lastOnStackIsFragmentOf(WhitelistFragment::class.java.name)) {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.container, WhitelistFragment())
+                    .addToBackStack(WhitelistFragment::class.java.name)
+                    .commit()
+            }
+        } else {
+            val builder = AlertDialog.Builder(this)
+            builder.setTitle(R.string.permission_missing)
+
+            builder.setMessage(this.getString(R.string.usage_permission_missing))
+                .setNeutralButton(android.R.string.cancel) { _, _ -> }
+                .setPositiveButton(android.R.string.ok) { _, _ ->
+                    startActivity(Intent(android.provider.Settings.ACTION_USAGE_ACCESS_SETTINGS))
+                }
+                .create()
+                .show()
+        }
+    }
+
+    private fun androidx.fragment.app.FragmentManager.lastOnStackIsFragmentOf(fragmentClassName: String) : Boolean = this.backStackEntryCount > 0
+            && this.getBackStackEntryAt(this.backStackEntryCount - 1).name == fragmentClassName
 }

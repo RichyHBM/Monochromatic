@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/main_menu_force_color" android:title="Force color"/>
-    <item android:id="@+id/main_menu_settings" android:title="Settings"/>
-    <item android:id="@+id/main_menu_about" android:title="About"/>
+    <item android:id="@+id/main_menu_force_color" android:title="@string/force_color"/>
+    <item android:id="@+id/main_menu_whitelist" android:title="@string/whitelist"/>
+    <item android:id="@+id/main_menu_settings" android:title="@string/settings"/>
+    <item android:id="@+id/main_menu_about" android:title="@string/about"/>
 </menu>

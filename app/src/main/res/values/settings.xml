@@ -12,4 +12,7 @@
     <string name="settings_key_show_notification_dialog" translatable="false">pref_key_show_notification_dialog</string>
     <string name="settings_key_bluelight_filter_enabled" translatable="false">pref_key_bluelight_filter_enabled</string>
     <string name="settings_key_bluelight_filter_temperature" translatable="false">pref_key_bluelight_filter_temperature</string>
+    <string name="settings_key_whitelisted_apps" translatable="false">pref_key_whitelisted_apps</string>
+    <string name="settings_key_disable_whitelist" translatable="false">pref_key_disable_whitelist</string>
+    <string name="settings_key_whitelist_show_system" translatable="false">pref_key_whitelist_show_system</string>
 </resources>
