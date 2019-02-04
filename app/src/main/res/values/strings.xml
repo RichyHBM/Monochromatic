@@ -6,8 +6,8 @@
     <string name="grant_permission_adb">Please give \"write secure settings\" permission running the following ADB command \"%1s\" and force close the app, for further instructions please visit the apps wiki</string>
     <string name="usage_permission_missing">Usage stats permission missing, please grant it in the following screen</string>
     <string name="app_info_1">Monochromatic is an app to facilitate phone usage at night, by enabling the built in monochrome feature in Android 5 or later</string>
-    <string name="app_info_2">As this changes a system setting uninstalling this app wont revert it, to do that either disable the app before uninstalling or change back to color mode in the developer settings</string>
-    <string name="app_info_3">By default Monochromatic is set to always on, you can change when grey scale is enabled in the settings, under the menu in the top right!</string>
+    <string name="app_info_2">As this changes a system setting, uninstalling this app wont revert it. To do that either disable the app before uninstalling or change back to color mode in the developer settings</string>
+    <string name="app_info_3">By default Monochromatic is set to always on, you can change when grey scale is enabled in the settings</string>
 
     <string name="app_info_about">Unlike other night screen apps, this doesn\'t create an overlay, enabling monochrome for all screens and views, and does not interfere with android secure actions such as installing apps</string>
     <string name="notification_dismiss_notice">Starting from android 8 apps are required to show a notification to be able to run in the background, the notification can be hidden by holding down on it and toggling the switch that appears</string>
