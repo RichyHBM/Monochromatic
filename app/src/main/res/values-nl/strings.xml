@@ -1,0 +1,31 @@
+<resources>
+    <string name="write_secure_settings_permission" translatable="false">android.permission.WRITE_SECURE_SETTINGS</string>
+    <string name="adb_command" translatable="false">adb shell pm grant %1s %2s</string>
+
+    <string name="permission_missing">Machtiging ontbreekt!</string>
+    <string name="grant_permission_adb">Verleen de machtiging \'beveiligde instellingen wegschrijven\' middels de volgende ADB-opdracht \"%1s\" en sluit de app geforceerd af. Kijk voor meer informatie op de wiki.</string>
+    <string name="usage_permission_missing">De machtiging \'gebruikstoegang\' ontbreekt. Verleen deze op het volgende scherm.</string>
+    <string name="app_info_1">Monochromatic is een app die je helpt je telefoon \'s avonds te gebruiken door het inschakelen van de monochroom-functie, aanwezig in Android 5 en nieuwer.</string>
+    <string name="app_info_2">Dit wijzigt een systeeminstelling. De instelling wordt niet automatisch teruggezet op de standaardwaarde. Schakel de app uit voordat je hem verwijdert of schakel terug naar kleurmodus in de ontwikkelaarsinstellingen.</string>
+    <string name="app_info_3">Standaard staat Monochromatic altijd aan. Je kunt dit aanpassen als grijswaarden zijn ingeschakeld in de instellingen.</string>
+
+    <string name="app_info_about">In tegenstelling tot andere avondscherm-apps creëert deze app geen overlay. Alle schermen en weergaven worden direct monochroom gemaakt en de app veroorzaakt geen storingen bij bijv. het installeren van apps.</string>
+    <string name="notification_dismiss_notice">Sinds Android 8 zijn apps die op de achtergrond worden uitgevoerd verplicht een melding te tonen. Deze melding kan worden verborgen door hem ingedrukt te houden en de getoonde schakelaar om te zetten.</string>
+    <string name="service_enabled">Monochromatic is ingeschakeld</string>
+    <string name="service_disabled">Monochromatic is uitgeschakeld</string>
+    <string name="by_richyhbm">Door RichyHBM</string>
+    <string name="toggle">Monochroom</string>
+
+    <string name="wiki">Wiki</string>
+    <string name="disable">Uitschakelen</string>
+    <string name="disable_for_screen">Scherm</string>
+    <string name="disable_for_session">Sessie</string>
+    <string name="share_command">Opdracht delen</string>
+    <string name="toggle_greyscale">Grijswaarden in-/uitschakelen</string>
+    <string name="toggling_please_wait">Bezig met overschakelen; even geduld...</string>
+    <string name="force_color">Kleur forceren</string>
+    <string name="whitelist">Witte lijst</string>
+    <string name="settings">Instellingen</string>
+    <string name="about">Over</string>
+    <string name="show_system">Systeemapps tonen</string>
+</resources>
